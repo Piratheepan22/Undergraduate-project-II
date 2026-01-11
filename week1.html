@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1 - Undergraduate Project Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Remote Sensing Of Environment</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn active">Weekly Updates <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="week1.html">Week 1</a>
+                        <a href="week2.html">Week 2</a>
+                        <a href="week3.html">Week 3</a>
+                        <a href="week4.html">Week 4</a>
+                        <a href="week5.html">Week 5</a>
+                        <a href="week6.html">Week 6</a>
+                        <a href="week7.html">Week 7</a>
+                        <a href="week8.html">Week 8</a>
+                        <a href="week9.html">Week 9</a>
+                        <a href="week10.html">Week 10</a>
+                        <a href="week11.html">Week 11</a>
+                        <a href="week12.html">Week 12</a>
+                        <a href="week13.html">Week 13</a>
+
+                    </div>
+                </li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="weekly-update">
+        <section class="week-header">
+            <h1>Week 1</h1>
+        </section>
+
+        <section class="week-content">
+            <div class="overview">
+                <h2>Overview</h2>
+                <p>
+                    This week, I focused on initiating the development of a change detection dataset using satellite imagery as a critical component of our project. 
+                    I set up and familiarized myself with Google Earth Engine (GEE) and Google Maps as primary tools for satellite image acquisition and processing. 
+                    Additionally, I reviewed research papers on remote sensing change detection methodologies and dataset labeling techniques.
+                </p>
+            </div>
+
+            <div class="text-content">
+                <h2>Detailed Update</h2>
+                <p>
+                    The creation of a reliable change detection dataset is essential for training and validating models that can identify temporal changes in land cover, 
+                    urban expansion, deforestation, and other environmental transformations. This week marked the foundational stage of this dataset development process.
+                </p>
+                
+                <h3>What is Change Detection?</h3>
+                <p>
+                    <strong>Change detection</strong> in remote sensing refers to the process of identifying differences in the state of an object or phenomenon 
+                    by observing it at different times. In the context of satellite imagery, this involves:
+                    <ul>
+                        <li>Comparing multi-temporal satellite images of the same geographic area</li>
+                        <li>Identifying and quantifying changes such as urban growth, vegetation loss, water body expansion, or infrastructure development</li>
+                        <li>Creating labeled datasets that can train machine learning models to automatically detect these changes</li>
+                    </ul>
+                </p>
+
+                <h3>Google Earth Engine (GEE)</h3>
+                <p>
+                    <strong>Google Earth Engine</strong> is a cloud-based platform for planetary-scale geospatial analysis. It provides:
+                    <ul>
+                        <li>Access to a massive archive of satellite imagery spanning several decades</li>
+                        <li>Pre-processed datasets from satellites like Landsat, Sentinel, MODIS, and more</li>
+                        <li>JavaScript and Python APIs for data processing and analysis</li>
+                        <li>Cloud computing capabilities to handle large-scale geospatial computations</li>
+                    </ul>
+                    This week, I created my GEE account and explored its interface, code editor, and available satellite image collections.
+                </p>
+
+                <h3>Tasks Completed This Week:</h3>
+                <ul>
+                    <li>Created a Google Earth Engine account and gained access to the platform</li>
+                    <li>Familiarized myself with the GEE Code Editor and JavaScript API</li>
+                    <li>Explored satellite image collections available in GEE (Landsat 8/9, Sentinel-2, etc.)</li>
+                    <li>Learned basic GEE operations: image filtering by date, region, and cloud cover</li>
+                    <li>Read research papers on:
+                        <ul>
+                            <li>Remote sensing-based change detection methodologies</li>
+                            <li>Best practices for creating change detection datasets</li>
+                            <li>Annotation and labeling techniques for satellite imagery</li>
+                            <li>Temporal image registration and preprocessing techniques</li>
+                        </ul>
+                    </li>
+                    <!-- <li>Identified potential study areas in Sri Lanka for dataset creation</li> -->
+                    <!-- <li>Outlined the dataset structure and labeling schema for change detection</li> -->
+                </ul>
+
+                <h3>Key Concepts Learned:</h3>
+                <ul>
+                    <li><strong>Multi-temporal analysis:</strong> Comparing images from different time periods</li>
+                    <!-- <li><strong>Image preprocessing:</strong> Atmospheric correction, cloud masking, and radiometric normalization</li> -->
+                    <li><strong>Ground truth labeling:</strong> Manual annotation of changed vs. unchanged regions</li>
+                    <li><strong>Spatial resolution considerations:</strong> Choosing appropriate satellite sensors based on study requirements</li>
+                    <li><strong>Temporal resolution:</strong> Determining optimal time intervals between image pairs</li>
+                </ul>
+
+                <h3>Research Papers Reviewed:</h3>
+                <p>
+                    This week, I reviewed several papers related to change detection in remote sensing, dataset creation methodologies, 
+                    and labeling techniques for satellite imagery. These papers provided insights into:
+                    <ul>
+                        <!-- <li>State-of-the-art change detection algorithms</li> -->
+                        <li>Dataset design principles for deep learning applications</li>
+                        <li>Quality control measures for labeled datasets</li>
+                        <li>Challenges in multi-temporal image registration</li>
+                    </ul>
+                </p>
+
+                <h3>Next Steps:</h3>
+                <ul>
+                    <li>Select specific regions of interest (ROIs) in Sri Lanka for dataset creation</li>
+                    <li>Download and preprocess satellite image pairs from GEE</li>
+                    <li>Begin manual annotation of change/no-change regions</li>
+                    <!-- <li>Develop scripts for automated image preprocessing pipeline</li>
+                    <li>Establish quality control protocols for dataset validation</li> -->
+                </ul>
+            </div>
+
+            <div class="media-section">
+                <h2>Google Earth Engine Exploration</h2>
+                <p>
+                    Below are some key aspects of Google Earth Engine that were explored this week:
+                </p>
+                
+                <h3>GEE Platform Features:</h3>
+                <ul>
+                    <li><strong>Data Catalog:</strong> Access to petabytes of satellite imagery and geospatial datasets</li>
+                    <li><strong>Code Editor:</strong> Browser-based IDE for writing and executing Earth Engine scripts</li>
+                    <li><strong>JavaScript API:</strong> Scripting interface for data processing and analysis</li>
+                    <!-- <li><strong>Python API:</strong> Alternative interface for integration with Python workflows</li> -->
+                    <li><strong>Visualization Tools:</strong> Interactive maps for displaying and analyzing results</li>
+                </ul>
+
+                <h3>Reviewd Research Papers </h3>
+                <div style="background-color: rgba(204, 205, 206, 0.626);padding-left: 50px; padding-bottom: 20px; padding-top: 20px;">
+
+                <!-- <h3>Reviewd Research Papers </h3> -->
+                <div class="documents">
+                <embed src="week1/documents/s41597-025-06167-2.pdf" width="80%"  height="500px" margin-left="20px" />
+                </div>
+                <br>
+                <br>
+                <br>
+                
+                <div class="documents">
+                <embed src="week1/documents/1-s2.0-S0034425717302900-main.pdf" width="80%" height="500px" margin-left="20px" />
+                </div>
+                </div>
+
+                <!-- <h3>Satellite Data Sources for Change Detection:</h3>
+                <ul>
+                    <li><strong>Landsat 8/9:</strong> 30m resolution, 16-day revisit time, long historical archive</li>
+                    <li><strong>Sentinel-2:</strong> 10m resolution, 5-day revisit time, freely available</li>
+                    <li><strong>MODIS:</strong> 250m-1km resolution, daily coverage, useful for large-scale monitoring</li>
+                </ul> -->
+            </div>
+        </section>
+
+        <div class="week-navigation">
+            <a href="week2.html" class="next">Next Week <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                <p><i class="fas fa-envelope"></i> e20293@eng.pdn.ac.lk</p>
+                <p><i class="fas fa-university"></i> University Of Peradeniya</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

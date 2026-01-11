@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 5 - Undergraduate Project Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Remote Sensing Of Environment Using Hyperspectral Image Sensing</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn active">Weekly Updates <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="week1.html">Week 1</a>
+                        <a href="week2.html">Week 2</a>
+                        <a href="week3.html">Week 3</a>
+                        <a href="week4.html">Week 4</a>
+                        <a href="week5.html">Week 5</a>
+                        <a href="week6.html">Week 6</a>
+                        <a href="week7.html">Week 7</a>
+                        <a href="week8.html">Week 8</a>
+                        <a href="week9.html">Week 9</a>
+                        <a href="week10.html">Week 10</a>
+                        <a href="week11.html">Week 11</a>
+                        <a href="week12.html">Week 12</a>
+                        <a href="week13.html">Week 13</a>
+                    </div>
+                </li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="weekly-update">
+        <section class="week-header">
+            <h1>Week 5</h1>
+        </section>
+
+        <section class="week-content">
+            <div class="overview">
+                <h2>Overview</h2>
+                <p>
+                    This week, We focused on developing a custom annotation tool for creating binary masks to label changed and unchanged areas 
+                    in the collected image pairs. I created a web-based software that allows uploading pre-disaster and post-disaster images 
+                    simultaneously, overlaying them with adjustable opacity, and manually annotating changed regions using polygon drawing tools. 
+                    The tool generates binary masks where <strong>white represents unchanged areas</strong> and <strong>black represents changed/damaged areas</strong>, 
+                    providing essential ground truth labels for training change detection models.
+                </p>
+            </div>
+
+            <div class="text-content">
+                <h2>Detailed Update</h2>
+                <p>
+                    With a comprehensive dataset of satellite image pairs collected over the past weeks, the next critical step was to create 
+                    ground truth annotations. These annotations—in the form of binary masks—are essential for supervised machine learning approaches 
+                    to change detection. Rather than using generic annotation tools, I developed a specialized application tailored to the specific 
+                    needs of this disaster mapping project.
+                </p>
+                
+                <h3>The Need for Custom Annotation Tool</h3>
+                <p>
+                    Change detection annotation requires comparing two images from different time periods and precisely identifying areas where 
+                    changes have occurred. This task has unique requirements:
+                    <ul>
+                        <li>Simultaneous viewing of before and after images for accurate comparison</li>
+                        <li>Ability to toggle between images or overlay them with adjustable transparency</li>
+                        <li>Precise polygon drawing tools for marking irregular change boundaries</li>
+                        <li>Zoom and pan capabilities for detailed annotation of small features</li>
+                        <li>Export functionality to generate binary masks in standard image formats</li>
+                        <li>Intuitive interface to speed up the annotation process across many image pairs</li>
+                    </ul>
+                    Existing general-purpose annotation tools often lack these specialized features, motivating the development of a custom solution.
+                </p>
+
+                <h3>Annotation Tool Development</h3>
+                <p>
+                    We developed a web-based annotation tool with the following key features:
+                </p>
+
+                <h4>Core Functionality:</h4>
+                <ul>
+                    <li><strong>Dual Image Upload:</strong> 
+                        <ul>
+                            <li>Upload pre-disaster (before) image</li>
+                            <li>Upload post-disaster (after) image</li>
+                            <li>Automatic image alignment on the same canvas</li>
+                        </ul>
+                    </li>
+                    <li><strong>Image Overlay System:</strong>
+                        <ul>
+                            <li>Layer the after image over the before image</li>
+                            <li>Adjustable opacity slider to control transparency of the overlay</li>
+                            <li>Toggle between images to identify changes easily</li>
+                            <li>Smooth transition for visual change identification</li>
+                        </ul>
+                    </li>
+                    <li><strong>Polygon Drawing Tools:</strong>
+                        <ul>
+                            <li>Click to create polygon vertices around changed areas</li>
+                            <li>Close polygons to define change regions</li>
+                            <li>Multiple polygon support for multiple change areas in one image</li>
+                            <li>Edit and delete capabilities for refining annotations</li>
+                        </ul>
+                    </li>
+                    <li><strong>Navigation Controls:</strong>
+                        <ul>
+                            <li>Zoom in/out functionality for detailed annotation</li>
+                            <li>Pan across the image canvas</li>
+                            <li>Reset view to original scale and position</li>
+                        </ul>
+                    </li>
+                    <li><strong>Binary Mask Export:</strong>
+                        <ul>
+                            <li>Generate binary mask from drawn polygons</li>
+                            <li>White pixels (255) for unchanged areas</li>
+                            <li>Black pixels (0) for changed/damaged areas</li>
+                            <li>Export in standard image formats (PNG, TIFF)</li>
+                            <li>Same resolution as input images for pixel-perfect alignment</li>
+                        </ul>
+                    </li>
+                </ul>
+
+
+                <h3>Tasks Completed This Week:</h3>
+                <ul>
+                    <li>Designed and developed the web-based annotation tool from scratch</li>
+                    <li>Implemented HTML5 Canvas for image rendering and manipulation</li>
+                    <li>Created JavaScript functions for:
+                        <!-- <ul>
+                            <li>Image loading and display</li>
+                            <li>Opacity adjustment and overlay management</li>
+                            <li>Polygon drawing and editing</li>
+                            <li>Zoom and pan controls</li>
+                            <li>Binary mask generation</li>
+                            <li>File export functionality</li>
+                        </ul> -->
+                    </li>
+                    <li>Developed a responsive user interface with CSS styling</li>
+                    <li>Tested the tool with sample image pairs from the collected dataset</li>
+                    <li>Created initial binary masks for several high-priority locations</li>
+                    <li>Documented the annotation workflow and best practices</li>
+                    <!-- <li>Established annotation guidelines:
+                        <ul>
+                            <li>Criteria for identifying significant changes</li>
+                            <li>Minimum change size to be annotated</li>
+                            <li>How to handle ambiguous cases</li>
+                            <li>Consistency standards across different annotators</li>
+                        </ul>
+                    </li> -->
+                    <li>Created example annotations demonstrating correct labeling approach</li>
+                </ul>
+
+                <!-- <h3>Binary Mask Annotation Process:</h3>
+                <p>
+                    The workflow for creating binary masks using the developed tool:
+                </p>
+                <ol>
+                    <li><strong>Load Images:</strong> Upload the before and after images for a location</li>
+                    <li><strong>Initial Comparison:</strong> Use opacity slider to quickly identify all changed areas</li>
+                    <li><strong>Zoom to Details:</strong> Zoom into specific regions for precise annotation</li>
+                    <li><strong>Draw Polygons:</strong> Carefully trace the boundaries of each changed area</li>
+                    <li><strong>Review:</strong> Toggle opacity and zoom to verify all changes are captured</li>
+                    <li><strong>Refine:</strong> Edit polygon boundaries for accuracy</li>
+                    <li><strong>Generate Mask:</strong> Create binary mask from all drawn polygons</li>
+                    <li><strong>Export:</strong> Save the binary mask with appropriate naming convention</li>
+                    <li><strong>Document:</strong> Record annotation notes for quality assurance</li>
+                </ol> -->
+
+                <!-- <h3>Annotation Guidelines Established:</h3>
+                <ul>
+                    <li><strong>Change Types to Annotate:</strong>
+                        <ul>
+                            <li>Flooded areas (water accumulation in previously dry land)</li>
+                            <li>Landslide scars and debris flows</li>
+                            <li>Destroyed or damaged buildings and infrastructure</li>
+                            <li>Significant vegetation loss</li>
+                            <li>Road and bridge damage</li>
+                        </ul>
+                    </li>
+                    <li><strong>Areas NOT to Annotate:</strong>
+                        <ul>
+                            <li>Seasonal changes (normal agricultural cycles)</li>
+                            <li>Cloud shadows or atmospheric differences</li>
+                            <li>Minor variations due to different imaging conditions</li>
+                            <li>Changes unrelated to the disaster (construction that was ongoing)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Quality Standards:</strong>
+                        <ul>
+                            <li>Polygon edges should closely follow change boundaries</li>
+                            <li>Minimum annotated change area: 10x10 pixels</li>
+                            <li>All visible significant changes must be annotated</li>
+                            <li>Consistent interpretation across the entire dataset</li>
+                        </ul>
+                    </li>
+                </ul> -->
+
+                <h3>Technical Implementation Details:</h3>
+                <ul>
+                    <li><strong>Technologies Used:</strong>
+                        <ul>
+                            <li>HTML5 Canvas for image rendering</li>
+                            <li>JavaScript for interactivity and logic</li>
+                            <li>CSS3 for responsive design</li>
+                            <li>Canvas API for drawing and manipulation</li>
+                        </ul>
+                    </li>
+                    <li><strong>Image Processing:</strong>
+                        <ul>
+                            <li>Client-side processing for fast performance</li>
+                            <li>Efficient rendering of large satellite images</li>
+                            <li>Real-time polygon rendering during drawing</li>
+                        </ul>
+                    </li>
+                    <li><strong>Export Format:</strong>
+                        <ul>
+                            <li>Binary PNG images (single channel)</li>
+                            <li>Pixel value 0 (black) = changed area</li>
+                            <li>Pixel value 255 (white) = unchanged area</li>
+                            <li>Same dimensions as input images</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <!-- <h3>Initial Annotation Results:</h3>
+                <p>
+                    Using the developed tool, I successfully created binary masks for several test locations. The results demonstrate:
+                    <ul>
+                        <li>Clear delineation of changed vs. unchanged areas</li>
+                        <li>Precise boundary tracing of flood and landslide regions</li>
+                        <li>Consistency in annotation quality across different image pairs</li>
+                        <li>Efficient workflow enabling annotation of multiple images per session</li>
+                    </ul>
+                </p> -->
+            </div>
+
+            <div class="media-section">
+                <h2>Documentation & Media</h2>
+                
+                <h3>Annotation Tool Interface</h3>
+                <p>
+                    Access the annotation tool here:
+                </p>
+                <div style="padding: 20px; background: #e8f4f8; border-left: 4px solid #0066cc; margin: 15px 0;">
+                    <p><strong>Annotation Tool Link:</strong></p>
+                    <p style="margin: 10px 0;">
+                        <a href="https://piratheepan22.github.io/Dataset-Annotation/" target="_blank" style="color: #0066cc; text-decoration: none; font-weight: bold;">
+                            🔗 Open Binary Mask Annotation Tool
+                        </a>
+                    </p>
+                    
+                </div>
+
+                <h3>Tool Screenshots & Examples</h3>
+                
+                <div class="image-gallery">
+                    <div >
+                        <p><strong>Annotation Tool Interface:</strong> Main interface showing image overlay and drawing tools</p>
+                        <img class="image"  src="week5/images/annotator.png" alt="annotator" style="width:100%; max-width:500px;">
+                    </div>
+                    <br>
+                    <br>
+                    
+                  
+                    
+                    <div >
+                        <p><strong>Polygon Drawing Process:</strong> Annotating a Affected area</p>
+                        <img class="image"  src="week5/images/annotation.png" alt="annotator" style="width:100%; max-width:500px;">
+                    </div>
+                    
+                    
+                    <!-- <div >
+                        <p><strong>Example: Generated Binary Mask Result</strong></p>
+                        <img   src="week5/images/MASK_E009_2.png" alt="annotator" style="width:100%; max-width:300px;border-color: black;">
+                        <p style="margin-top: 10px; font-style: italic; color: #666;">
+                            Binary mask showing: White = No Change, Black = Changed/Damaged Areas
+                        </p>
+                    </div> -->
+                    
+                
+                </div>
+
+                <h3>Annotation Examples </h3>
+                
+                <h4>Example 1:</h4>
+                <div style="text-align: center;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 15px 0 5px; background-color: rgba(77, 77, 81, 0.284); ">
+                    <div>
+                        <p style="text-align: center; font-weight: bold;">Before</p>
+                        <img   src="week5/images/BEFORE_E009_2.png" alt="annotator" style="width:100%; max-width:330px;border-color: black; margin-left: 15px;">
+                    </div>
+                    <div>
+                        <p style="text-align: center; font-weight: bold;">After</p>
+                        <img   src="week5/images/AFTER_E009_2.png" alt="annotator" style="width:100%; max-width:330px;border-color: black;">
+                    </div>
+                    <div>
+                        <p style="text-align: center; font-weight: bold;">Binary Mask</p>
+                        <img   src="week5/images/MASK_E009_2.png" alt="annotator" style="width:100%; max-width:330px;border-color: black;margin-right: 15px;">
+                        
+                    </div>
+                    
+                    
+                    <br>
+                    
+                </div>
+                <p>Example of pre, post, binary mask images</p>
+            </div>
+
+                <!-- <h4>Example 2:</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 15px 0;">
+                    <div>
+                        <p style="text-align: center; font-weight: bold;">Before</p>
+                        <p style="padding: 40px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                            [Before - Intact slope]
+                        </p>
+                    </div>
+                    <div>
+                        <p style="text-align: center; font-weight: bold;">After</p>
+                        <p style="padding: 40px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                            [After - Landslide scar]
+                        </p>
+                    </div>
+                    <div>
+                        <p style="text-align: center; font-weight: bold;">Binary Mask</p>
+                        <p style="padding: 40px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                            [Binary mask]
+                        </p>
+                    </div> -->
+                </div>
+
+                <!-- <h3>Tool Features Summary</h3>
+                <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 15px 0;">
+                    <ul style="list-style-type: none; padding-left: 0;">
+                        <li>✅ Dual image upload (before/after)</li>
+                        <li>✅ Adjustable opacity overlay</li>
+                        <li>✅ Polygon drawing tools</li>
+                        <li>✅ Zoom and pan controls</li>
+                        <li>✅ Edit and delete annotations</li>
+                        <li>✅ Binary mask export (PNG format)</li>
+                        <li>✅ Real-time visual feedback</li>
+                        <li>✅ Keyboard shortcuts</li>
+                        <li>✅ Undo/redo functionality</li>
+                    </ul> -->
+                </div>
+            </div>
+
+            <div class="next-steps">
+                <h2>Next Week's Plan</h2>
+                <ul>
+                    <li>Systematically annotate all collected image pairs using the developed tool</li>
+                    <li>Create binary masks for all locations in the dataset</li>
+                    <!-- <li>Implement quality control process to review and validate annotations</li> -->
+                    <li>Calculate dataset statistics (total annotated area, change distribution, etc.)</li>
+                    <li>Prepare dataset documentation including annotation guidelines</li>
+                    <li>Begin organizing the complete dataset (images + masks)</li>
+                    
+                </ul>
+            </div>
+        </section>
+
+        <div class="week-navigation">
+            <a href="week4.html" class="prev"><i class="fas fa-arrow-left"></i> Previous Week</a>
+            <a href="week6.html" class="next">Next Week <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                <p><i class="fas fa-envelope"></i> e20293@eng.pdn.ac.lk</p>
+                <p><i class="fas fa-university"></i> University Of Peradeniya</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

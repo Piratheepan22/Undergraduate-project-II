@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 3 - Undergraduate Project Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Remote Sensing Of Environment</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn active">Weekly Updates <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="week1.html">Week 1</a>
+                        <a href="week2.html">Week 2</a>
+                        <a href="week3.html">Week 3</a>
+                        <a href="week4.html">Week 4</a>
+                        <a href="week5.html">Week 5</a>
+                        <a href="week6.html">Week 6</a>
+                        <a href="week7.html">Week 7</a>
+                        <a href="week8.html">Week 8</a>
+                        <a href="week9.html">Week 9</a>
+                        <a href="week10.html">Week 10</a>
+                        <a href="week11.html">Week 11</a>
+                        <a href="week12.html">Week 12</a>
+                        <a href="week13.html">Week 13</a>
+                    </div>
+                </li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="weekly-update">
+        <section class="week-header">
+            <h1>Week 3</h1>
+        </section>
+
+        <section class="week-content">
+            <div class="overview">
+                <h2>Overview</h2>
+                <p>
+                    This week, we focused on the technical implementation phase of the dataset creation. Using the list of affected areas 
+                    compiled last week, we developed Google Earth Engine (GEE) code to systematically collect satellite image pairs 
+                    showing the conditions before, during, and after the November 2025 disaster. I successfully implemented image filtering, 
+                    preprocessing, and began collecting image pairs for the identified affected locations across Sri Lanka.
+                </p>
+            </div>
+
+            <div class="text-content">
+                <h2>Detailed Update</h2>
+                <p>
+                    Building upon the comprehensive location list created last week, this week marked the transition from planning to 
+                    implementation. The primary goal was to develop robust GEE scripts that could efficiently collect high-quality 
+                    satellite imagery for all identified disaster-affected locations.
+                </p>
+                
+                <h3>Google Earth Engine Code Development</h3>
+                <p>
+                    we developed a comprehensive GEE script with the following key functionalities:
+                    <ul>
+                        <li><strong>Region of Interest (ROI) Definition:</strong> Code to define geographic boundaries for each affected area using coordinates</li>
+                        <li><strong>Temporal Filtering:</strong> Scripts to filter images into three categories:
+                            <ul>
+                                <li>Before disaster: Images from before The disaster</li>
+                                <li>During disaster: Images captured around November 28-29, 2025 on the disaster time</li>
+                                <li>After disaster: Images from after The disaster</li>
+                            </ul>
+                        </li>
+                        <!-- <li><strong>Cloud Masking:</strong> Implementation of cloud filtering algorithms to ensure clear imagery</li> -->
+                        <li><strong>Image Compositing:</strong> Creating median composites when multiple images are available for the same time period</li>
+                        <li><strong>Band Selection:</strong> Selecting appropriate spectral bands for visualization and analysis</li>
+                        <li><strong>Export Functionality:</strong> Code to download processed images for dataset creation</li>
+                    </ul>
+                </p>
+
+                <h3>Tasks Completed This Week:</h3>
+                <ul>
+                    <li>Developed complete GEE code for image collection</li>
+                    <li>Implemented functions to:
+                        <ul>
+                            <li>Load satellite image collections (Sentinel-2)</li>
+                            <li>Filter images by date range and geographic location</li>
+                            <!-- <li>Apply cloud masking using built-in quality assessment bands</li> -->
+                            <!-- <li>Create RGB and false-color composites for better visualization</li> -->
+                            <li>Generate image pairs for comparison</li>
+                        </ul>
+                    </li>
+                    <li>Set up the GEE code editor workspace with organized scripts</li>
+                    <li>Tested the code with sample locations from the affected areas list</li>
+                    <li>Began systematic collection of image pairs for priority locations</li>
+                    <!-- <li>Selected appropriate satellite sources based on:
+                        <ul>
+                            <li><strong>Sentinel-2:</strong> 10m resolution for detailed urban and settlement analysis</li>
+                            <li><strong>Landsat 8/9:</strong> 30m resolution for broader area coverage</li>
+                        </ul>
+                    </li> -->
+                    <!-- <li>Established image quality criteria:
+                        <ul>
+                            <li>Maximum cloud cover threshold: 20%</li>
+                            <li>Clear visibility of ground features</li>
+                            <li>Consistent atmospheric conditions</li>
+                        </ul>
+                    </li> -->
+                    <li>Created a systematic workflow for processing each location</li>
+                    <!-- <li>Documented the GEE work process with screenshots showing:
+                        <ul>
+                            <li>Code editor interface with developed scripts</li>
+                            <li>Image filtering and selection process</li>
+                            <li>Visual comparison of before/during/after images</li>
+                            <li>Map visualization of affected areas</li>
+                        </ul>
+                    </li> -->
+                    <li>Organized collected image pairs with proper naming conventions</li>
+                </ul>
+
+                <!-- <h3>GEE Code Components:</h3>
+                <p>
+                    The developed code includes several modular components:
+                </p>
+                <ul>
+                    <li><strong>Image Collection Module:</strong>
+                        <ul>
+                            <li>Functions to load Sentinel-2 and Landsat collections</li>
+                            <li>Date range filtering based on disaster timeline</li>
+                            <li>Geographic boundary filtering using ROI polygons</li>
+                        </ul>
+                    </li>
+                    <li><strong>Preprocessing Module:</strong>
+                        <ul>
+                            <li>Cloud masking using QA bands</li>
+                            <li>Atmospheric correction (already applied in Level-2 products)</li>
+                            <li>Image compositing for multi-image scenarios</li>
+                        </ul>
+                    </li>
+                    <li><strong>Visualization Module:</strong>
+                        <ul>
+                            <li>True-color RGB visualization</li>
+                            <li>False-color composites for enhanced change detection</li>
+                            <li>Side-by-side comparison display</li>
+                        </ul>
+                    </li>
+                    <li><strong>Export Module:</strong>
+                        <ul>
+                            <li>Image export to Google Drive</li>
+                            <li>Metadata generation including acquisition date and coordinates</li>
+                            <li>Automated file naming system</li>
+                        </ul>
+                    </li>
+                </ul> -->
+
+                <!-- <h3>Image Pair Collection Process:</h3>
+                <p>
+                    For each affected location, the workflow involves:
+                    <ol>
+                        <li><strong>Load location coordinates</strong> from the compiled list</li>
+                        <li><strong>Define ROI</strong> around the affected area with appropriate buffer</li>
+                        <li><strong>Filter pre-disaster images</strong> (typically 1-2 months before November 28)</li>
+                        <li><strong>Filter during-disaster images</strong> (around November 28-29, 2024)</li>
+                        <li><strong>Filter post-disaster images</strong> (typically within 1 week after November 29)</li>
+                        <li><strong>Apply cloud masking</strong> and quality filters</li>
+                        <li><strong>Generate composites</strong> if multiple images available</li>
+                        <li><strong>Visual inspection</strong> to ensure image quality</li>
+                        <li><strong>Export images</strong> with proper naming and metadata</li>
+                        <li><strong>Document</strong> the collection details for each location</li>
+                    </ol>
+                </p> -->
+
+                <!-- <h3>Key Technical Considerations:</h3>
+                <ul>
+                    <li><strong>Temporal Resolution:</strong> Balancing between finding cloud-free images and maintaining temporal proximity to the disaster</li>
+                    <li><strong>Spatial Resolution:</strong> Choosing between 10m (Sentinel-2) and 30m (Landsat) based on area size and detail requirements</li>
+                    <li><strong>Spectral Bands:</strong> Utilizing appropriate band combinations for different change types:
+                        <ul>
+                            <li>Natural color (RGB) for general visualization</li>
+                            <li>NIR-Red-Green for vegetation and water detection</li>
+                            <li>SWIR-NIR-Red for flood and moisture detection</li>
+                        </ul>
+                    </li>
+                    <li><strong>Geometric Alignment:</strong> Ensuring before/after images are properly co-registered</li>
+                    <li><strong>Radiometric Consistency:</strong> Using Level-2 products with atmospheric correction</li>
+                </ul> -->
+
+                <h3>Image Pair Collection Progress:</h3>
+                <p>
+                    we have successfully begun collecting image pairs for the priority locations identified last week. 
+                    The focus has been on areas where:
+                    <ul>
+                        <li>Clear pre-disaster baseline imagery is available</li>
+                        <li>The disaster impact was most severe and visible</li>
+                        <li>Post-disaster imagery shows significant changes</li>
+                        <li>Cloud cover is minimal across all three time periods</li>
+                        <li>Ground features are clearly distinguishable</li>
+                    </ul>
+                </p>
+
+                <h3>Sample Image Pairs Collected:</h3>
+                <p>
+                    Initial image pairs have been collected showing:
+                    <ul>
+                        <li>Flooding in low-lying urban and agricultural areas</li>
+                        <li>Landslide scars in hilly regions</li>
+                        <li>Changes in water body extents</li>
+                        <li>Infrastructure damage and debris</li>
+                        <li>Vegetation changes in affected zones</li>
+                    </ul>
+                </p>
+            </div>
+
+            <div class="media-section">
+                <h2>Documentation & Media</h2>
+                
+                <h3>GEE Code Editor & Workflow </h3>
+                
+                
+                <div >
+                    
+                    
+                    <div >
+                        <!-- <p>Below are screenshots documenting the GEE code editor with our code</p> -->
+                        <div > 
+                            <img class="image"  src="week3/images/gee_codeeditor.png" alt="code editor" style="width:100%; max-width:500px;">
+                            <figcaption>GEE code editor with developed code</figcaption>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+
+                    <div >
+                        <!-- <p>Before-After Comparison: Sample image pairs showing visible changes in flood-affected areas</p> -->
+                        <div > 
+                            <img   src="week3/images/BEFORE_E009_2.png" alt="sample" style="width:100%; max-width:500px;">
+                            <img   src="week3/images/AFTER_E009_2.png" alt="sample" style="width:100%; max-width:500px;">
+                            <figcaption>Sample image pairs showing visible changes in flood-affected areas</figcaption>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                    
+                   
+                    
+                    <div>
+                        <!-- <p><strong>Map Visualization:</strong> GEE map interface showing ROIs and affected regions</p> -->
+                        <div > 
+                            <img class="image"  src="week3/images/gee_layers.png" alt="sample" style="width:100%; max-width:500px;">
+                            <figcaption>GEE map interface showing ROIs, layers and affected regions</figcaption>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                
+                <!-- <h3>Code Snippets:</h3>
+                <p>
+                    Key code examples from the GEE implementation:
+                </p> -->
+                
+            </div>
+
+            <div class="next-steps">
+                <h2>Next Week's Plan</h2>
+                <ul>
+                    <li>Complete image pair collection for all identified affected locations</li>
+                    <li>Begin manual annotation and labeling of changed vs. unchanged regions</li>
+                    
+                    <li>Create visualization tools for side-by-side image comparison</li>
+                    <li>Start quality assessment and validation of collected image pairs</li>
+                    
+                </ul>
+            </div>
+        </section>
+
+        <div class="week-navigation">
+            <a href="week2.html" class="prev"><i class="fas fa-arrow-left"></i> Previous Week</a>
+            <a href="week4.html" class="next">Next Week <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                <p><i class="fas fa-envelope"></i> e20293@eng.pdn.ac.lk</p>
+                <p><i class="fas fa-university"></i> University Of Peradeniya</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

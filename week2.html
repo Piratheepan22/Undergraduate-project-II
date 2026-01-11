@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 2 - Undergraduate Project Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Remote Sensing Of Environment</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn active">Weekly Updates <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="week1.html">Week 1</a>
+                        <a href="week2.html">Week 2</a>
+                        <a href="week3.html">Week 3</a>
+                        <a href="week4.html">Week 4</a>
+                        <a href="week5.html">Week 5</a>
+                        <a href="week6.html">Week 6</a>
+                        <a href="week7.html">Week 7</a>
+                        <a href="week8.html">Week 8</a>
+                        <a href="week9.html">Week 9</a>
+                        <a href="week10.html">Week 10</a>
+                        <a href="week11.html">Week 11</a>
+                        <a href="week12.html">Week 12</a>
+                        <a href="week13.html">Week 13</a>
+                    </div>
+                </li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="weekly-update">
+        <section class="week-header">
+            <h1>Week 2</h1>
+        </section>
+
+        <section class="week-content">
+            <div class="overview">
+                <h2>Overview</h2>
+                <p>
+                    This week, we decided to focus our change detection dataset on the devastating <strong>Cyclone Ditwah</strong> disaster 
+                    that struck Sri Lanka in late November 2025. we conducted extensive research to identify and document 
+                    the affected areas, specifically focusing on the severe flooding in the Northern/North-Central/central provinces and the 
+                    landslides in the Badulla district. Using Google Maps and disaster management reports, we compiled 
+                    a comprehensive list of locations (ground truth points) for our dataset. Additionally, i continued reviewing research papers 
+                    on change detection methodologies and dataset creation suitable for these specific terrains.
+                </p>
+                
+            </div>
+
+            <div class="text-content">
+                <h2>Detailed Update</h2>
+                <p>
+                    Building on last week's foundation with Google Earth Engine, this week was dedicated to defining the specific focus 
+                    of our change detection dataset. The November 2025 disaster presented a critical opportunity to create 
+                    a meaningful dataset that could contribute to disaster management and future research in automated change detection systems.
+                </p>
+                
+                <h3>The November 2025 Disaster (Cyclone Ditwah)</h3>
+                <p>
+                    From November 26-29, 2025, heavy rainfall intensified by Cyclone Ditwah caused widespread devastation.
+                    Unlike typical monsoon rains, this event created distinct spectral signatures suitable for hyperspectral analysis due to the
+                    rapid sediment accumulation in water bodies and massive slope failures in the hill country.
+                </p>
+                
+                <!-- <h3>Selected Study Areas</h3>
+                <p>
+                    To ensure our dataset covers diverse terrain types, I selected the following specific locations based on the severity of the impact:
+                </p>
+                <ul>
+                    <li><strong>Badulla District (Landslides):</strong>
+                        <p>
+                            I identified the <strong>Madolsima</strong> and <strong>Galuda</strong> areas as primary sites for landslide detection. 
+                            The massive earth slips in <strong>Kahataruppa</strong> offer clear "before-and-after" spectral differences 
+                            due to the exposure of fresh soil against the vegetation.
+                        </p>
+                    </li>
+                    <li><strong>Northern & North-Central Provinces (Flooding):</strong>
+                        <p>
+                            For flood mapping, I focused on the <strong>Mannar</strong> and <strong>Puttalam</strong> districts. 
+                            Specifically, the overflow of the <em>Malwathu Oya</em> created a vast inundation zone that is ideal for training 
+                            water-index-based classifiers. I also marked the <strong>Gampaha</strong> district, where urban flooding presents 
+                            a more complex challenge for spectral unmixing.
+                        </p>
+                    </li>
+                    <li><strong>Eastern Province (Agricultural Damage):</strong>
+                        <p>
+                            The dataset also includes the <strong>Ampara</strong> region (specifically <strong>Kalmunai</strong>), 
+                            where paddy cultivation lands were submerged, providing a test case for crop damage assessment.
+                        </p>
+                    </li>
+                </ul> -->
+
+                <h3>Why This Dataset is Important</h3>
+                <p>
+                    Creating a comprehensive change detection dataset for this specific disaster serves multiple purposes:
+                    <ul>
+                        <li><strong>Spectral Diversity:</strong> Captures both water-based (flood) and soil-based (landslide) changes.</li>
+                        <li><strong>Ground Truth Validation:</strong> The distinct nature of the Madolsima landslide allows for high-confidence labeling.</li>
+                        <li><strong>Disaster Management:</strong> Supports rapid response models for future cyclones in the Bay of Bengal.</li>
+                    </ul>
+                </p>
+
+                <h3>Tasks Completed This Week:</h3>
+                <ul>
+                    <li>Finalized the decision to focus on the November 2025 Cyclone Ditwah event.</li>
+                    <li>Researched Situation Reports (SitReps) from the Disaster Management Centre (DMC) to locate the exact coordinates of the events.</li>
+                    <li>Identified critical locations:
+                        <ul>
+                            <li><strong>Eg: Landslides:</strong> Kandy, Madolsima, Galuda, Passara, and Ella.</li>
+                            <li><strong>Eg: Floods:</strong> Puttalam, Batticaloa, and Gampaha.</li>
+                        </ul>
+                    </li>
+                    <!-- <li>Used <strong>Google Maps</strong> to:
+                        <ul>
+                            <li>Pinpoint the exact extent of the <strong>Madolsima</strong> landslide for polygon annotation.</li>
+                            <li>Trace the flood boundary along the <strong>Malwathu Oya</strong> river basin.</li>
+                            <li>Record GPS coordinates for 50+ affected points to serve as training labels.</li>
+                        </ul>
+                    </li> -->
+                    <li>Got a structured CSV file documenting:
+                        <ul>
+                            <li>Location Name & District</li>
+                            <li>Disaster Class (Landslide/Flood/Urban Flood)</li>
+                            <li>Coordinates (Lat/Lon)</li>
+                            <li>Date of Event (e.g., Nov 27, 2025)</li>
+                        </ul>
+                    </li>
+                    <li>Continued reading research papers
+                        <!-- <ul>
+                            <li>Change detection methodologies in tropical disaster scenarios</li>
+                            <li>Spectral unmixing for flood detection in urban areas (relevant for Gampaha)</li>
+                        </ul> -->
+                    </li>
+                </ul>
+
+                <!-- <h3>Information Sources Used:</h3>
+                <ul>
+                    <li>DMC Situation Reports (Nov 26-30, 2025)</li>
+                    <li>NBRO Landslide Warning Circulars for Badulla District</li>
+                    <li>Sentinel-2 Cloud-free imagery previews (via USGS Earth Explorer)</li>
+                    <li>Google Maps for geographic verification</li>
+                </ul> -->
+
+                <h3>Reviewd Research Papers </h3>
+                <div class="documents">
+                <embed src="week2/documents/1911.09296v1.pdf" width="80%" height="500px" margin-left="20px" />
+                </div>
+                <br>
+                <br>
+
+                <div class="documents">
+                <embed src="week2/documents/ISPRS_BigDataReview_Tamiminiaetal_2020.pdf" width="80%" height="500px" margin-left="20px" />
+                </div>
+                <!-- <p>
+                    Continuing from last week's literature review, I focused on papers specifically related to rapid disaster assessment 
+                    using optical and radar data. I examined how <em>Post-Classification Comparison (PCC)</em> and <em>Principal Component Analysis (PCA)</em> 
+                    could be applied to the specific soil types found in the Badulla region.
+                </p> -->
+                
+
+                <!-- <h3>Affected Areas Documentation:</h3>
+                <p>
+                    The comprehensive list of affected locations now serves as the ground truth for our dataset. 
+                    For example, the coordinate set for the <strong>Galuda</strong> landslide will be used to train the model to distinguish 
+                    between "Vegetation" and "Exposed Soil" classes.
+                </p> -->
+            </div>
+
+            <!-- <div class="media-section">
+                <h2>Documentation</h2>
+                
+                <h3>Sample of Affected Areas List Structure:</h3>
+                <p>
+                    The documented information for each location includes:
+                </p>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Location</th>
+                                <th>District</th>
+                                <th>Disaster Type</th>
+                                <th>Coordinates</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Madolsima</td>
+                                <td>Badulla</td>
+                                <td>Landslide</td>
+                                <td>6.9xx, 81.1xx</td>
+                                <td>Major slope failure, high spectral contrast</td>
+                            </tr>
+                            <tr>
+                                <td>Mannar Town</td>
+                                <td>Mannar</td>
+                                <td>Flood</td>
+                                <td>8.9xx, 79.9xx</td>
+                                <td>Coastal inundation, saline water mixing</td>
+                            </tr>
+                            <tr>
+                                <td>Gampaha</td>
+                                <td>Gampaha</td>
+                                <td>Urban Flood</td>
+                                <td>7.0xx, 79.9xx</td>
+                                <td>Mixed pixels (water + buildings)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> -->
+
+                <!-- <h3>Google Maps Usage:</h3>
+                <p>
+                    Google Maps was instrumental in visualizing the terrain of the <strong>Central Highlands</strong>. 
+                    Understanding the topography of the <strong>Passara</strong> gap helped explain the specific trajectory of the landslides, 
+                    which is crucial for selecting the correct satellite viewing angle (Nadir vs. Off-Nadir) in our later stages.
+                </p> -->
+            </div>
+
+            <div class="next-steps">
+                <h2>Next Week's Plan</h2>
+                <ul>
+                    <li>Develop Google Earth Engine code to collect Sentinel-2 and Landsat imagery for the identified coordinates (Nov 2025 vs Oct 2025).</li>
+                    <li>Implement cloud masking scripts, as the cyclone period has high cloud cover.</li>
+                    <li>Begin collecting image pairs </li>
+                    <!-- <li>Start documenting the GEE workflow with code snippets.</li> -->
+                </ul>
+            </div>
+        </section>
+
+        <div class="week-navigation">
+            <a href="week1.html" class="prev"><i class="fas fa-arrow-left"></i> Previous Week</a>
+            <a href="week3.html" class="next">Next Week <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                <p><i class="fas fa-envelope"></i> e20293@eng.pdn.ac.lk</p>
+                <p><i class="fas fa-university"></i> University Of Peradeniya</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
