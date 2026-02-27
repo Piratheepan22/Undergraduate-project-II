@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 6 - Undergraduate Project Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Remote Sensing Of Environment Using Hyperspectral Image Sensing</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn active">Weekly Updates <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="week1.html">Week 1</a>
+                        <a href="week2.html">Week 2</a>
+                        <a href="week3.html">Week 3</a>
+                        <a href="week4.html">Week 4</a>
+                        <a href="week5.html">Week 5</a>
+                        <a href="week6.html">Week 6</a>
+                        <a href="week7.html">Week 7</a>
+                        <a href="week8.html">Week 8</a>
+                        <a href="week9.html">Week 9</a>
+                        <a href="week10.html">Week 10</a>
+                        <a href="week11.html">Week 11</a>
+                        <a href="week12.html">Week 12</a>
+                        <a href="week13.html">Week 13</a>
+                    </div>
+                </li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="weekly-update">
+        <section class="week-header">
+            <h1>Week 6</h1>
+        </section>
+
+        <section class="week-content">
+            <div class="overview">
+                <h2>Overview</h2>
+                <p>
+                    This week, I expanded our change detection dataset beyond RGB imagery to include comprehensive 
+                    <strong>Multispectral Instrument (MSI)</strong> data from Sentinel-2 satellites. I developed a systematic 
+                    workflow in Google Earth Engine to collect 13-band multispectral image triplets (before, during, after) 
+                    for the same disaster-affected locations. This expansion significantly enhances our dataset's capability 
+                    for detecting changes related to floods and landslides using spectral information beyond the visible spectrum.
+                </p>
+            </div>
+
+            <div class="text-content">
+                <h2>Detailed Update</h2>
+                
+                <h3>Why Expand to MSI?</h3>
+                <p>
+                    RGB-only imagery has limitations for disaster detection. It cannot capture moisture content, struggles 
+                    to differentiate land cover types, and is sensitive to lighting conditions. Sentinel-2 MSI provides 
+                    13 spectral bands from coastal aerosol to shortwave infrared (SWIR), enabling:
+                    <ul>
+                        <li><strong>Better water detection:</strong> NIR and SWIR bands are strongly absorbed by water</li>
+                        <li><strong>Vegetation monitoring:</strong> Red edge bands detect vegetation stress and loss</li>
+                        <li><strong>Material discrimination:</strong> SWIR bands differentiate soil, rock, and urban materials</li>
+                        <li><strong>Spectral indices:</strong> NDVI, NDWI, and NBR for robust change detection</li>
+                    </ul>
+                </p>
+
+                <h3>Tasks Completed This Week:</h3>
+                <ul>
+                    <li>Developed Google Earth Engine scripts for MSI data collection with cloud-aware selection</li>
+                    <li>Implemented temporal window-based selection: 90-day lookback (before), ±3 days (during), 10-day forward (after)</li>
+                    <li>Configured 13-band exports with cloud probability filtering (threshold: >40% cloud = reject)</li>
+                    <li>Set up cloud-optimized GeoTIFF exports at 10m resolution, 316×316 pixel patches</li>
+                    <li>Aligned MSI imagery with existing RGB dataset locations and timeframes</li>
+                    <li>Reviewed research papers on Sentinel-2 for urban change detection</li>
+                    <li>Began systematic collection of MSI triplets for priority locations</li>
+                </ul>
+
+                <h3>Sentinel-2 MSI Bands</h3>
+                <p>
+                    The 13 bands span different spatial resolutions and spectral ranges:
+                </p>
+                <ul>
+                    <li><strong>10m bands:</strong> Blue (B2), Green (B3), Red (B4), NIR (B8) - visible and near-infrared</li>
+                    <li><strong>20m bands:</strong> Red Edge (B5-B7), Narrow NIR (B8A), SWIR (B11-B12) - vegetation and moisture</li>
+                    <li><strong>60m bands:</strong> Coastal Aerosol (B1), Water Vapor (B9), Cirrus (B10) - atmospheric correction</li>
+                </ul>
+                <p>
+                    Key bands for disaster detection:
+                    <ul>
+                        <li><strong>B8 (NIR):</strong> Essential for NDVI and water detection</li>
+                        <li><strong>B5-B7 (Red Edge):</strong> Vegetation stress and health monitoring</li>
+                        <li><strong>B11-B12 (SWIR):</strong> Moisture content, flood mapping, landslide scars</li>
+                    </ul>
+                </p>
+
+                <h3>GEE Workflow Overview</h3>
+                <p>
+                    The automated workflow includes:
+                </p>
+                <ol>
+                    <li><strong>Data Loading:</strong> Load COPERNICUS/S2_HARMONIZED and S2_CLOUD_PROBABILITY collections</li>
+                    <li><strong>Temporal Windows:</strong> Define before (90 days), during (±3 days), after (10 days) periods</li>
+                    <li><strong>Cloud Filtering:</strong> Join with cloud probability, rank by cloud fraction, select clearest image</li>
+                    <li><strong>Band Selection:</strong> Extract all 13 bands, resample to 10m grid</li>
+                    <li><strong>Export:</strong> Cloud-optimized GeoTIFF to Google Drive with standardized naming</li>
+                </ol>
+
+                <h3>Key Code Components</h3>
+                <div style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; margin: 10px 0; font-family: monospace; font-size: 0.9em; overflow-x: auto;">
+                    <p style="color: #6a9955;">// Define temporal parameters</p>
+                    <p>var targetDate = ee.Date('2024-11-29');</p>
+                    <p>var bands = ['B1','B2','B3','B4','B5','B6','B7','B8','B8A','B9','B10','B11','B12'];</p>
+                    <p><br></p>
+                    <p style="color: #6a9955;">// Load Sentinel-2 with cloud probability</p>
+                    <p>var s2 = ee.ImageCollection('COPERNICUS/S2_HARMONIZED');</p>
+                    <p>var cloudProb = ee.ImageCollection('COPERNICUS/S2_CLOUD_PROBABILITY');</p>
+                    <p><br></p>
+                    <p style="color: #6a9955;">// Select best image by cloud coverage</p>
+                    <p>var bestImage = collection.sort('cloudFrac').first();</p>
+                </div>
+
+                <h3>Advantages Over RGB</h3>
+                <ul>
+                    <li>NIR/SWIR capture moisture and vegetation signals invisible to RGB</li>
+                    <li>Red edge bands detect subtle vegetation stress from disasters</li>
+                    <li>SWIR bands enable accurate flood extent mapping</li>
+                    <li>Spectral indices normalize lighting variations and shadows</li>
+                    <li>Better material separation (soil vs. concrete vs. water)</li>
+                </ul>
+<!-- 
+                <h3>Dataset Organization</h3>
+                <div style="background: #f5f5f5; padding: 15px; border-radius: 5px; margin: 10px 0; font-family: monospace; font-size: 0.9em;">
+                    <p>Dataset_SriLanka_Nov2024_Disaster/</p>
+                    <p>├── RGB/ (3-band images + binary masks)</p>
+                    <p>├── MSI/ (13-band images)</p>
+                    <p>│   └── [Location]/</p>
+                    <p>│       ├── BEFORE_S2_13B.tif</p>
+                    <p>│       ├── ON_S2_13B.tif</p>
+                    <p>│       ├── AFTER_S2_13B.tif</p>
+                    <p>│       └── metadata.json</p>
+                </div> -->
+            </div>
+
+            <div class="media-section">
+                <h2>Documentation & Media</h2>
+                
+                <h3>GEE Interface with MSI data collection process</h3>
+                <div style="padding: 60px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                     <img class="image"  src="week6/images/msi.png" alt="annotator" style="width:150%; max-width:500px;">
+                </div>
+<!-- 
+                <h3>MSI Composite Examples</h3>
+                <div style="padding: 50px; background: #f0f0f0; text-align: center; margin: 10px 0; border: 2px dashed #ccc;">
+                    [Insert: True color (B4-B3-B2) and False color (B8-B4-B3)]
+                </div>
+
+                <h3>Spectral Index Visualization</h3>
+                <div style="padding: 50px; background: #f0f0f0; text-align: center; margin: 10px 0; border: 2px dashed #ccc;">
+                    [Insert: NDVI or NDWI showing change detection capability]
+                </div> -->
+            </div>
+
+            <div class="next-steps">
+                <h2>Next Week's Plan</h2>
+                <ul>
+                    <li>Complete MSI triplet collection for all dataset locations</li>
+                    <li>Compute spectral indices (NDVI, NDWI, NBR) for each triplet</li>
+                    <li>Verify spatial alignment between RGB and MSI data</li>
+                    <li>Begin integrating MSI features with binary mask annotations</li>
+                    <li>Document complete workflow and create usage guide</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="week-navigation">
+            <a href="week5.html" class="prev"><i class="fas fa-arrow-left"></i> Previous Week</a>
+            <a href="week7.html" class="next">Next Week <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                <p><i class="fas fa-envelope"></i> e20293@eng.pdn.ac.lk</p>
+                <p><i class="fas fa-university"></i> University Of Peradeniya</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

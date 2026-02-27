@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 8 - Undergraduate Project Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Remote Sensing Of Environment Using Hyperspectral Image Sensing</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn active">Weekly Updates <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="week1.html">Week 1</a>
+                        <a href="week2.html">Week 2</a>
+                        <a href="week3.html">Week 3</a>
+                        <a href="week4.html">Week 4</a>
+                        <a href="week5.html">Week 5</a>
+                        <a href="week6.html">Week 6</a>
+                        <a href="week7.html">Week 7</a>
+                        <a href="week8.html">Week 8</a>
+                        <a href="week9.html">Week 9</a>
+                        <a href="week10.html">Week 10</a>
+                        <a href="week11.html">Week 11</a>
+                        <a href="week12.html">Week 12</a>
+                        <a href="week13.html">Week 13</a>
+                    </div>
+                </li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="weekly-update">
+        <section class="week-header">
+            <h1>Week 8</h1>
+        </section>
+
+        <section class="week-content">
+            <div class="overview">
+                <h2>Overview</h2>
+                <p>
+                    This week, I developed an automated workflow using <strong>Google Colab</strong> to process the 
+                    collected MSI triplets and generate change detection masks using spectral indices. The workflow 
+                    validates Sentinel-2 data, computes NDVI and NDWI indices, applies automated thresholding to 
+                    identify changes, and distinguishes between <strong>persistent</strong> and <strong>transient</strong> 
+                    changes. This automated approach provides a systematic way to process all collected triplets and 
+                    generates standardized outputs for comparison with manual annotations.
+                </p>
+            </div>
+
+            <div class="text-content">
+                <h2>Detailed Update</h2>
+                
+                <h3>Automated Change Detection Workflow</h3>
+                <p>
+                    Building on last week's spectral index exploration, I created a complete processing pipeline 
+                    that automatically analyzes MSI triplets and generates change masks. This workflow serves as 
+                    both a validation tool for our data and a baseline method for automated change detection.
+                </p>
+
+                <h3>Tasks Completed This Week:</h3>
+                <ul>
+                    <li>Developed Google Colab notebook for automated MSI triplet processing</li>
+                    <li>Implemented data validation to verify triplet completeness and band integrity</li>
+                    <li>Created RGB and false-color composite visualizations for quick quality checks</li>
+                    <li>Computed NDVI and NDWI for all three temporal phases (Before, During, After)</li>
+                    <li>Generated delta-index maps showing changes relative to Before image</li>
+                    <li>Applied Otsu's automatic thresholding method to identify significant changes</li>
+                    <li>Implemented morphological operations for mask cleanup and noise reduction</li>
+                    <li>Created persistent vs. transient change classification logic</li>
+                    <li>Exported results in multiple formats: GeoTIFF (with geospatial info) and PNG (for visualization)</li>
+                    <li>Tested workflow on sample triplets from different disaster types</li>
+                </ul>
+
+                <h3>Workflow Components</h3>
+
+                <h4>1. Data Loading and Validation</h4>
+                <ul>
+                    <li>Load 13-band Sentinel-2 GeoTIFF files for Before, During, and After phases</li>
+                    <li>Verify band completeness and correct ordering</li>
+                    <li>Check spatial alignment and coordinate reference systems</li>
+                    <li>Validate pixel value ranges and identify any corrupted data</li>
+                </ul>
+
+                <h4>2. Visualization and Quality Check</h4>
+                <ul>
+                    <li><strong>RGB Composites:</strong> True color visualization (Red-Green-Blue)</li>
+                    <li><strong>False-Color Composites:</strong> NIR-Red-Green for vegetation emphasis</li>
+                    <li><strong>Band Inspection Grids:</strong> Display selected individual bands across time</li>
+                    <li>Quick visual assessment to identify obvious issues or cloud contamination</li>
+                </ul>
+
+                <h4>3. Spectral Index Computation</h4>
+                <p>Calculate indices for each timestamp:</p>
+                <div style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; margin: 10px 0; font-family: monospace; font-size: 0.9em;">
+                    <p style="color: #6a9955;">// NDVI: Vegetation index</p>
+                    <p>NDVI = (Band8 - Band4) / (Band8 + Band4)</p>
+                    <p>NDVI = (NIR - Red) / (NIR + Red)</p>
+                    <p><br></p>
+                    <p style="color: #6a9955;">// NDWI: Water/moisture index</p>
+                    <p>NDWI = (Band3 - Band8) / (Band3 + Band8)</p>
+                    <p>NDWI = (Green - NIR) / (Green + NIR)</p>
+                </div>
+
+                <h4>4. Change Detection via Delta Maps</h4>
+                <p>Compute change by subtracting Before index from other phases:</p>
+                <div style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; margin: 10px 0; font-family: monospace; font-size: 0.9em;">
+                    <p style="color: #6a9955;">// Compute deltas relative to Before</p>
+                    <p>Δ_During = Index_During - Index_Before</p>
+                    <p>Δ_After = Index_After - Index_Before</p>
+                    <p><br></p>
+                    <p style="color: #6a9955;">// Large absolute deltas indicate change</p>
+                    <p>Change_During = |Δ_During| > threshold</p>
+                    <p>Change_After = |Δ_After| > threshold</p>
+                </div>
+
+                <h4>5. Otsu's Automatic Thresholding</h4>
+                <p>
+                    Instead of manually selecting thresholds, I used <strong>Otsu's method</strong>, which automatically 
+                    determines the optimal threshold by analyzing the histogram of delta values:
+                </p>
+                <ul>
+                    <li>Separates changed pixels from unchanged pixels based on statistical distribution</li>
+                    <li>Adapts to different scenes and change magnitudes automatically</li>
+                    <li>No manual tuning required for different locations</li>
+                    <li>Particularly effective when change and no-change pixels form distinct populations</li>
+                </ul>
+
+                <h4>6. Morphological Cleanup</h4>
+                <p>
+                    Raw thresholded masks often contain noise and small isolated pixels. Morphological operations clean these up:
+                </p>
+                <ul>
+                    <li><strong>Opening:</strong> Removes small isolated noise pixels</li>
+                    <li><strong>Closing:</strong> Fills small holes within change regions</li>
+                    <li><strong>Area filtering:</strong> Removes very small connected components</li>
+                    <li>Results in cleaner, more interpretable change masks</li>
+                </ul>
+
+                <h4>7. Persistent vs. Transient Change Classification</h4>
+                <p>
+                    One of the key innovations this week is separating two types of changes:
+                </p>
+                <ul>
+                    <li><strong>Persistent Changes:</strong>
+                        <ul>
+                            <li>Present in BOTH During and After images</li>
+                            <li>Represents lasting damage (permanent flooding, landslide scars)</li>
+                            <li>Logic: Mask_Persistent = Mask_During AND Mask_After</li>
+                        </ul>
+                    </li>
+                    <li><strong>Transient Changes:</strong>
+                        <ul>
+                            <li>Present in During but NOT in After images</li>
+                            <li>Represents temporary conditions (receded floodwaters, temporary debris)</li>
+                            <li>Logic: Mask_Transient = Mask_During AND (NOT Mask_After)</li>
+                        </ul>
+                    </li>
+                </ul>
+                <p>
+                    This classification provides valuable information about change dynamics and helps understand 
+                    which impacts were temporary versus permanent.
+                </p>
+
+                <h3>Output Generation</h3>
+                <p>The workflow generates multiple output types for each triplet:</p>
+                <ul>
+                    <li><strong>Index Rasters:</strong> NDVI and NDWI for Before, During, After (6 GeoTIFFs)</li>
+                    <li><strong>Delta Maps:</strong> Δ_During and Δ_After for both indices (4 GeoTIFFs)</li>
+                    <li><strong>Binary Masks:</strong> Thresholded change masks (GeoTIFF format)</li>
+                    <li><strong>Classified Masks:</strong> Persistent vs. Transient change separation</li>
+                    <li><strong>Visualizations:</strong> PNG format for easy viewing and documentation</li>
+                    <li><strong>Composites:</strong> RGB and false-color for context</li>
+                </ul>
+
+                <h3>Key Advantages of This Approach</h3>
+                <ul>
+                    <li><strong>Fully Automated:</strong> No manual intervention required after initial setup</li>
+                    <li><strong>Reproducible:</strong> Same processing applied consistently to all triplets</li>
+                    <li><strong>Adaptive:</strong> Otsu's method adjusts to different scenes automatically</li>
+                    <li><strong>Multi-index:</strong> NDVI and NDWI provide complementary change signals</li>
+                    <li><strong>Temporal Intelligence:</strong> Distinguishes persistent from transient changes</li>
+                    <li><strong>Baseline Method:</strong> Provides comparison point for manual annotations</li>
+                </ul>
+
+                <h3>Observations and Findings</h3>
+                <ul>
+                    <li>False-color composites (NIR-Red-Green) make vegetation and water changes much more visible than RGB</li>
+                    <li>NDVI excels at detecting vegetation loss from landslides</li>
+                    <li>NDWI performs better for flood extent mapping</li>
+                    <li>Otsu thresholding works well when change is significant relative to background variation</li>
+                    <li>Morphological cleanup is essential for removing sensor noise and small artifacts</li>
+                    <li>Persistent change masks often correspond well with manually annotated damage areas</li>
+                    <li>Transient changes help identify temporary flooding that receded before the After image</li>
+                </ul>
+
+                <h3>Workflow Testing Results</h3>
+                <p>
+                    Tested the workflow on several triplets representing different disaster scenarios:
+                    <ul>
+                        <li><strong>Flood scenarios:</strong> NDWI delta maps clearly showed water extent changes</li>
+                        <li><strong>Landslide areas:</strong> NDVI delta maps highlighted vegetation loss</li>
+                        <li><strong>Mixed impacts:</strong> Combination of both indices captured complex changes</li>
+                        <li>Automated masks showed good agreement with visual interpretation</li>
+                        <li>Processing time: ~2-3 minutes per triplet on Google Colab</li>
+                    </ul>
+                </p>
+            </div>
+
+            <div class="media-section">
+                <h2>Documentation & Media</h2>
+<!--                 
+                <h3>Workflow Visualization Examples</h3>
+                
+                <h4>RGB and False-Color Composites</h4>
+                <div style="padding: 50px; background: #f0f0f0; text-align: center; margin: 10px 0; border: 2px dashed #ccc;">
+                    [Insert: RGB vs false-color composites showing Before/During/After]
+                </div>
+
+                <h4>Band Inspection Grid</h4>
+                <div style="padding: 50px; background: #f0f0f0; text-align: center; margin: 10px 0; border: 2px dashed #ccc;">
+                    [Insert: Grid showing selected bands across three time periods]
+                </div>
+
+                <h4>NDVI and NDWI Index Maps</h4>
+                <div style="padding: 50px; background: #f0f0f0; text-align: center; margin: 10px 0; border: 2px dashed #ccc;">
+                    [Insert: NDVI and NDWI maps for Before/During/After]
+                </div>
+
+                <h4>NDVI Change Detection Results</h4>
+                <div style="padding: 50px; background: #f0f0f0; text-align: center; margin: 10px 0; border: 2px dashed #ccc;">
+                    [Insert: NDVI delta maps and resulting change masks]
+                </div>
+
+                <h4>NDWI Change Detection Results</h4>
+                <div style="padding: 50px; background: #f0f0f0; text-align: center; margin: 10px 0; border: 2px dashed #ccc;">
+                    [Insert: NDWI delta maps and change masks for flood detection]
+                </div>
+
+                <h4>Persistent vs. Transient Classification</h4>
+                <div style="padding: 50px; background: #f0f0f0; text-align: center; margin: 10px 0; border: 2px dashed #ccc;">
+                    [Insert: Visualization showing persistent vs transient change masks]
+                </div>
+
+                <h4>Export Outputs Preview</h4>
+                <div style="padding: 50px; background: #f0f0f0; text-align: center; margin: 10px 0; border: 2px dashed #ccc;">
+                    [Insert: Screenshot of exported GeoTIFF and PNG files]
+                </div> -->
+
+                <h3>Processing Workflow Diagram</h3>
+                <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 15px 0; font-family: monospace; font-size: 0.9em;">
+                    <p>1. Load MSI Triplets (Before, During, After)</p>
+                    <p>↓</p>
+                    <p>2. Validate Data & Create Composites</p>
+                    <p>↓</p>
+                    <p>3. Compute NDVI & NDWI for Each Phase</p>
+                    <p>↓</p>
+                    <p>4. Calculate Delta Maps (Δ_During, Δ_After)</p>
+                    <p>↓</p>
+                    <p>5. Apply Otsu Thresholding</p>
+                    <p>↓</p>
+                    <p>6. Morphological Cleanup</p>
+                    <p>↓</p>
+                    <p>7. Classify: Persistent vs. Transient</p>
+                    <p>↓</p>
+                    <p>8. Export Results (GeoTIFF + PNG)</p>
+                </div>
+
+                <!-- <h3>Google Colab Notebook</h3>
+                <p>The complete processing workflow is documented in the Colab notebook:</p>
+                <div style="padding: 20px; background: #f9f9f9; border-radius: 8px; margin: 10px 0;">
+                    <p><strong>Colab Notebook Documentation</strong></p>
+                    <p style="font-size: 0.9em; color: #666;">Full workflow with code, explanations, and example outputs</p>
+                    <p style="margin-top: 10px;">
+                        <a href="Papers/colab.pdf" target="_blank" style="color: #3498db;">View Notebook PDF</a>
+                    </p>
+                </div> -->
+            </div>
+
+            <!-- <div class="next-steps">
+                <h2>Next Week's Plan</h2>
+                <ul>
+                    <li>Process all remaining MSI triplets through the automated workflow</li>
+                    <li>Compare automated change masks with manual annotations for accuracy assessment</li>
+                    <li>Calculate metrics: precision, recall, F1-score for automated vs. manual masks</li>
+                    <li>Identify cases where automated method fails and analyze reasons</li>
+                    <li>Explore combining NDVI and NDWI masks for improved detection</li>
+                    <li>Finalize which derived features (indices, deltas) to include in baseline model</li>
+                    <li>Document best practices and parameter settings for different disaster types</li>
+                </ul>
+            </div> -->
+        </section>
+
+        <div class="week-navigation">
+            <a href="week7.html" class="prev"><i class="fas fa-arrow-left"></i> Previous Week</a>
+            <a href="week9.html" class="next">Next Week <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                <p><i class="fas fa-envelope"></i> e20293@eng.pdn.ac.lk</p>
+                <p><i class="fas fa-university"></i> University Of Peradeniya</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

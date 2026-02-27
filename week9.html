@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 9 - Undergraduate Project Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Remote Sensing Of Environment Using Hyperspectral Image Sensing</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn active">Weekly Updates <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="week1.html">Week 1</a>
+                        <a href="week2.html">Week 2</a>
+                        <a href="week3.html">Week 3</a>
+                        <a href="week4.html">Week 4</a>
+                        <a href="week5.html">Week 5</a>
+                        <a href="week6.html">Week 6</a>
+                        <a href="week7.html">Week 7</a>
+                        <a href="week8.html">Week 8</a>
+                        <a href="week9.html">Week 9</a>
+                        <a href="week10.html">Week 10</a>
+                        <a href="week11.html">Week 11</a>
+                        <a href="week12.html">Week 12</a>
+                        <a href="week13.html">Week 13</a>
+                    </div>
+                </li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="weekly-update">
+        <section class="week-header">
+            <h1>Week 9</h1>
+        </section>
+
+        <section class="week-content">
+            <div class="overview">
+                <h2>Overview</h2>
+                <p>
+                    While MSI-based analysis continues in parallel, this week I shifted focus to developing the core 
+                    <strong>RGB change detection model</strong> using deep learning. I designed a <strong>Hybrid Vision 
+                    Transformer (ViT) and CNN architecture</strong> that leverages transfer learning from pre-trained 
+                    models to address the challenge of limited training data. The architecture uses a ViT-Base encoder 
+                    pre-trained on EuroSAT satellite imagery to extract global features from 6-channel image pairs 
+                    (before and after RGB concatenated), combined with a CNN decoder for precise change mask prediction. 
+                    To prevent overfitting with our growing but still limited dataset, I implemented a strategic 
+                    layer-freezing approach that fine-tunes only the final Transformer blocks.
+                </p>
+            </div>
+
+            <div class="text-content">
+                <h2>Detailed Update</h2>
+                
+                <h3>Transition to RGB Deep Learning Model</h3>
+                <p>
+                    With a substantial RGB dataset now collected and annotated, this week marked the transition from 
+                    data collection to model development. While MSI analysis work continues in the background, I began 
+                    developing the primary change detection model that will process RGB image pairs and generate 
+                    damage assessment maps.
+                </p>
+
+                <h3>Tasks Completed This Week:</h3>
+                <ul>
+                    <li>Designed hybrid Vision Transformer (ViT) and CNN architecture for change detection</li>
+                    <li>Selected and integrated ViT-Base model pre-trained on EuroSAT dataset</li>
+                    <li>Implemented 6-channel early fusion strategy for image pair processing</li>
+                    <li>Developed layer-freezing mechanism to prevent overfitting with limited data</li>
+                    <li>Created CNN decoder with skip connections for spatial detail preservation</li>
+                    <li>Set up training pipeline with data augmentation strategies</li>
+                    <li>Configured loss functions suitable for imbalanced change detection</li>
+                    <li>Established model evaluation metrics (IoU, F1-score, precision, recall)</li>
+                    <!-- <li>Began initial training experiments on collected RGB dataset</li> -->
+                </ul>
+
+                <h3>Model Architecture Design</h3>
+                
+                <h4>Why Hybrid ViT + CNN?</h4>
+                <p>
+                    The architecture combines the strengths of two powerful paradigms:
+                    <ul>
+                        <li><strong>Vision Transformer (ViT):</strong> Excels at capturing global context and long-range 
+                        dependencies across the image, crucial for understanding disaster impacts that span large areas</li>
+                        <li><strong>CNN Decoder:</strong> Provides precise spatial localization and fine-grained boundary 
+                        detection, essential for accurate change mask generation</li>
+                    </ul>
+                    This hybrid approach outperforms pure CNN or pure Transformer architectures for change detection tasks.
+                </p>
+
+                <h4>Architecture Components:</h4>
+
+                <p><strong>1. Input Processing - Early Fusion Strategy:</strong></p>
+                <ul>
+                    <li>Concatenate Before (RGB) and After (RGB) images → 6-channel input</li>
+                    <li>Input shape: [Height × Width × 6]</li>
+                    <li>Early fusion allows the model to learn joint feature representations from both time periods</li>
+                    <li>More effective than late fusion for capturing subtle changes</li>
+                </ul>
+
+                <p><strong>2. ViT-Base Encoder (Pre-trained on EuroSAT):</strong></p>
+                <ul>
+                    <li><strong>Pre-training Source:</strong> EuroSAT dataset (27,000 labeled Sentinel-2 satellite images)</li>
+                    <li><strong>Why EuroSAT:</strong> Already trained on satellite imagery, understands remote sensing features</li>
+                    <li><strong>Architecture:</strong> 12 Transformer layers, 768 hidden dimensions, 12 attention heads</li>
+                    <li><strong>Patch Size:</strong> 16×16 pixels divided into patches for Transformer processing</li>
+                    <li><strong>Output:</strong> Sequence of patch embeddings capturing global semantic features</li>
+                </ul>
+
+                <p><strong>3. Strategic Layer Freezing:</strong></p>
+                <ul>
+                    <li><strong>Challenge:</strong> Limited training data (growing dataset still relatively small)</li>
+                    <li><strong>Solution:</strong> Freeze early and middle Transformer layers, fine-tune only final blocks</li>
+                    <li><strong>Configuration:</strong>
+                        <ul>
+                            <li>Freeze: Layers 1-9 (general feature extraction)</li>
+                            <li>Fine-tune: Layers 10-12 (task-specific adaptation)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Benefits:</strong> Prevents overfitting, leverages pre-trained knowledge, adapts to local terrain</li>
+                </ul>
+
+                <p><strong>4. CNN Decoder with Skip Connections:</strong></p>
+                <ul>
+                    <li>Multi-scale upsampling pathway</li>
+                    <li>Skip connections from encoder preserve spatial details</li>
+                    <li>Progressive refinement: coarse to fine-grained predictions</li>
+                    <li>Final output: Binary change mask matching input resolution</li>
+                </ul>
+
+                <h3>Technical Implementation(ongoing) Details</h3>
+
+                <h4>Data Preprocessing:</h4>
+                <ul>
+                    <li>Normalization: Scale pixel values to [0, 1] range</li>
+                    <li>Standardization: Mean subtraction and variance normalization per channel</li>
+                    <li>Resizing: Ensure consistent input dimensions (e.g., 256×256 or 512×512)</li>
+                    <li>Augmentation: Random flips, rotations, brightness/contrast adjustments</li>
+                </ul>
+
+                <h4>Training Strategy:</h4>
+                <ul>
+                    <li><strong>Loss Function:</strong> Combination of Binary Cross-Entropy and Dice Loss
+                        <ul>
+                            <li>BCE handles pixel-wise classification</li>
+                            <li>Dice Loss addresses class imbalance (changed pixels are minority)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Optimizer:</strong> AdamW with weight decay for regularization</li>
+                    <li><strong>Learning Rate:</strong> Lower rate (1e-4) for fine-tuning pre-trained layers</li>
+                    <li><strong>Batch Size:</strong> Adjusted based on GPU memory (typically 8-16)</li>
+                    <li><strong>Early Stopping:</strong> Monitor validation loss to prevent overfitting</li>
+                </ul>
+
+                <h4>Evaluation Metrics:</h4>
+                <ul>
+                    <li><strong>IoU (Intersection over Union):</strong> Primary metric for segmentation quality</li>
+                    <li><strong>F1-Score:</strong> Harmonic mean of precision and recall</li>
+                    <li><strong>Precision:</strong> Accuracy of predicted change pixels</li>
+                    <li><strong>Recall:</strong> Coverage of actual changed areas</li>
+                    <li><strong>Pixel Accuracy:</strong> Overall classification accuracy</li>
+                </ul>
+
+                <h3>Why This Architecture for Sri Lanka Disasters?</h3>
+                <ul>
+                    <li><strong>Transfer Learning:</strong> EuroSAT pre-training provides satellite imagery understanding 
+                    without requiring massive local datasets</li>
+                    <li><strong>Global Context:</strong> Transformers capture large-scale patterns (entire flood zones, 
+                    landslide extents)</li>
+                    <li><strong>Precise Boundaries:</strong> CNN decoder maintains sharp change boundaries critical for 
+                    damage assessment</li>
+                    <li><strong>Adaptability:</strong> Layer freezing allows model to adapt to Sri Lankan terrain and 
+                    disaster characteristics</li>
+                    <li><strong>Scalability:</strong> As more data is collected, can progressively unfreeze more layers</li>
+                </ul>
+<!-- 
+                <h3>Dataset Preparation for Training</h3>
+                <ul>
+                    <li>Split collected data: 70% training, 15% validation, 15% test</li>
+                    <li>Ensure geographic diversity across splits</li>
+                    <li>Balance flood and landslide examples in training set</li>
+                    <li>Apply stratification to maintain disaster type distribution</li>
+                    <li>Create data loading pipeline with on-the-fly augmentation</li>
+                </ul> -->
+
+                <!-- <h3>Initial Training Results</h3>
+                <p>
+                    Preliminary training experiments show promising results:
+                    <ul>
+                        <li>Model successfully learns to identify changed regions</li>
+                        <li>Pre-trained ViT significantly outperforms training from scratch</li>
+                        <li>Layer freezing effectively prevents overfitting on small dataset</li>
+                        <li>Model generalizes reasonably to validation set</li>
+                        <li>Further tuning needed for optimal performance</li>
+                    </ul>
+                </p> -->
+
+                <h3>Challenges and Solutions</h3>
+                <ul>
+                    <li><strong>Challenge:</strong> Limited training data compared to typical deep learning requirements
+                        <ul>
+                            <li><strong>Solution:</strong> Transfer learning + layer freezing + aggressive augmentation</li>
+                        </ul>
+                    </li>
+                    <!-- <li><strong>Challenge:</strong> Class imbalance (most pixels unchanged)
+                        <ul>
+                            <li><strong>Solution:</strong> Dice Loss + weighted BCE + focal loss consideration</li>
+                        </ul>
+                    </li>
+                    <li><strong>Challenge:</strong> Varied disaster types (floods vs landslides have different patterns)
+                        <ul>
+                            <li><strong>Solution:</strong> Diverse training examples + multi-scale features</li>
+                        </ul>
+                    </li> -->
+                </ul>
+            </div>
+
+            <div class="media-section">
+                <h2>Documentation & Media</h2>
+                
+                <h3>Architecture Diagram</h3>
+                <div >
+                        <!-- <p><strong>Annotation Tool Interface:</strong> Main interface showing image overlay and drawing tools</p> -->
+                        <img class="image"  src="week9/images/vit.png" alt="annotator" style="width:100%; max-width:500px;">
+                </div>
+
+                <h3>Patch Splitting</h3>
+                <div >
+                        <!-- <p><strong>Annotation Tool Interface:</strong> Main interface showing image overlay and drawing tools</p> -->
+                        <img class="image"  src="week9/images/split.png" alt="annotator" style="width:100%; max-width:500px;">
+                </div>
+
+                <h3>Model Pipeline Visualization</h3>
+                <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 15px 0; font-family: monospace; font-size: 0.9em;">
+                    <p>Before RGB (H×W×3) + After RGB (H×W×3)</p>
+                    <p>↓ [Concatenate]</p>
+                    <p>6-Channel Input (H×W×6)</p>
+                    <p>↓ [Patch Embedding]</p>
+                    <p>ViT-Base Encoder (Pre-trained on EuroSAT)</p>
+                    <p>├─ Layers 1-9: Frozen (General Features)</p>
+                    <p>└─ Layers 10-12: Fine-tuned (Task-specific)</p>
+                    <p>↓ [Patch Embeddings]</p>
+                    <p>CNN Decoder (Skip Connections)</p>
+                    <p>↓ [Upsampling + Refinement]</p>
+                    <p>Change Mask (H×W×1)</p>
+                </div>
+<!-- 
+                <h3>Training Progress Examples</h3>
+                <div style="padding: 50px; background: #f0f0f0; text-align: center; margin: 10px 0; border: 2px dashed #ccc;">
+                    [Insert: Training/validation loss curves]
+                </div>
+
+                <h3>Prediction Examples</h3>
+                <div style="padding: 50px; background: #f0f0f0; text-align: center; margin: 10px 0; border: 2px dashed #ccc;">
+                    [Insert: Before/After images with predicted vs. ground truth masks]
+                </div> -->
+
+                <h3>Key Architecture Features</h3>
+                <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 15px 0;">
+                    <ul style="list-style-type: none; padding-left: 0;">
+                        <li>✅ <strong>ViT-Base Encoder:</strong> 12 layers, 768 hidden dim, 12 heads</li>
+                        <li>✅ <strong>Pre-training:</strong> EuroSAT satellite imagery dataset</li>
+                        <li>✅ <strong>Input:</strong> 6-channel early fusion (RGB before + RGB after)</li>
+                        <li>✅ <strong>Freezing:</strong> Layers 1-9 frozen, Layers 10-12 fine-tuned</li>
+                        <li>✅ <strong>Decoder:</strong> CNN with skip connections</li>
+                        <li>✅ <strong>Loss:</strong> Combined BCE + Dice Loss</li>
+                        <li>✅ <strong>Output:</strong> Binary change mask</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="next-steps">
+                <h2>Next Week's Plan</h2>
+                <ul>
+                    <li>Develop web application for model deployment and testing</li>
+                    <li>Create Flask backend API for model inference</li>
+                    <li>Build interactive frontend for real-time damage map visualization</li>
+                    <li>Implement image upload and processing pipeline</li>
+                    <li>Enable side-by-side comparison of predictions and ground truth</li>
+                    <li>Continue model training and hyperparameter optimization</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="week-navigation">
+            <a href="week8.html" class="prev"><i class="fas fa-arrow-left"></i> Previous Week</a>
+            <a href="week10.html" class="next">Next Week <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                <p><i class="fas fa-envelope"></i> e20293@eng.pdn.ac.lk</p>
+                <p><i class="fas fa-university"></i> University Of Peradeniya</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

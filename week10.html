@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 10 - Undergraduate Project Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Remote Sensing Of Environment Using Hyperspectral Image Sensing</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn active">Weekly Updates <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="week1.html">Week 1</a>
+                        <a href="week2.html">Week 2</a>
+                        <a href="week3.html">Week 3</a>
+                        <a href="week4.html">Week 4</a>
+                        <a href="week5.html">Week 5</a>
+                        <a href="week6.html">Week 6</a>
+                        <a href="week7.html">Week 7</a>
+                        <a href="week8.html">Week 8</a>
+                        <a href="week9.html">Week 9</a>
+                        <a href="week10.html">Week 10</a>
+                        <a href="week11.html">Week 11</a>
+                        <a href="week12.html">Week 12</a>
+                        <a href="week13.html">Week 13</a>
+                    </div>
+                </li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="weekly-update">
+        <section class="week-header">
+            <h1>Week 10</h1>
+        </section>
+
+        <section class="week-content">
+            <div class="overview">
+                <h2>Overview</h2>
+                <p>
+                    This week, I developed a <strong>full-stack web application</strong> to facilitate real-time testing 
+                    and visualization of the AI-generated damage maps. The application uses <strong>Flask</strong> as the 
+                    backend server to handle model inference and <strong>JavaScript</strong> on the frontend to create an 
+                    interactive user interface. This development framework provides an intuitive platform for uploading 
+                    satellite image pairs, running the trained change detection model, and visualizing the results with 
+                    side-by-side comparisons of predictions and ground truth annotations. The web application ensures that 
+                    our system is fully optimized for practical deployment and high-accuracy disaster assessment.
+                </p>
+            </div>
+
+            <div class="text-content">
+                <h2>Detailed Update</h2>
+                
+                <h3>Web Application Development</h3>
+                <p>
+                    With the core model architecture established last week, this week focused on creating a practical 
+                    deployment platform. The web application bridges the gap between the trained model and end-users, 
+                    providing an accessible interface for disaster assessment without requiring technical expertise.
+                </p>
+
+                <h3>Tasks Completed This Week:</h3>
+                <ul>
+                    <li>Designed and implemented Flask backend API for model serving</li>
+                    <li>Created RESTful endpoints for image upload and processing</li>
+                    <li>Integrated trained change detection model into Flask application</li>
+                    <li>Developed frontend interface using HTML, CSS, and JavaScript</li>
+                    <li>Implemented interactive image upload with drag-and-drop functionality</li>
+                    <li>Created real-time visualization of change detection results</li>
+                    <li>Built side-by-side comparison view for predictions vs. ground truth</li>
+                    <li>Added overlay visualization with adjustable opacity</li>
+                    <li>Implemented result export functionality (download predictions)</li>
+                    <!-- <li>Set up error handling and user feedback mechanisms</li> -->
+                    <!-- <li>Optimized model loading for faster inference times</li> -->
+                    <!-- <li>Tested application with various image pairs from the dataset</li> -->
+                </ul>
+
+                <h3>Application Architecture</h3>
+
+                <h4>Backend - Flask Server:</h4>
+                <p>
+                    The Flask backend handles all computational tasks:
+                </p>
+                <ul>
+                    <li><strong>Model Loading:</strong>
+                        <ul>
+                            <li>Load pre-trained ViT-CNN model on server startup</li>
+                            <li>Keep model in memory for fast inference</li>
+                            <li>Support GPU acceleration if available</li>
+                        </ul>
+                    </li>
+                    <li><strong>Image Processing Pipeline:</strong>
+                        <ul>
+                            <li>Receive uploaded before/after images</li>
+                            <li>Validate image format and dimensions</li>
+                            <li>Apply preprocessing (resize, normalize)</li>
+                            <li>Create 6-channel input tensor</li>
+                        </ul>
+                    </li>
+                    <li><strong>Model Inference:</strong>
+                        <ul>
+                            <li>Run change detection model on preprocessed input</li>
+                            <li>Post-process output (thresholding, cleanup)</li>
+                            <li>Generate visualization-ready change mask</li>
+                        </ul>
+                    </li>
+                    <li><strong>Response Handling:</strong>
+                        <ul>
+                            <li>Convert predictions to image format</li>
+                            <li>Return results as JSON with base64 encoded images</li>
+                            <li>Include confidence scores and metadata</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>Frontend - Interactive Interface:</h4>
+                <p>
+                    The JavaScript-powered frontend provides intuitive interaction:
+                </p>
+                <ul>
+                    <li><strong>Image Upload Interface:</strong>
+                        <ul>
+                            <li>Drag-and-drop zone for before/after images</li>
+                            <li>File browser with format validation</li>
+                            <li>Image preview before processing</li>
+                            <li>Clear/reset functionality</li>
+                        </ul>
+                    </li>
+                    <li><strong>Visualization Components:</strong>
+                        <ul>
+                            <li>Side-by-side view: Original images + prediction</li>
+                            <li>Overlay mode: Change mask overlaid on images</li>
+                            <li>Opacity slider for overlay adjustment</li>
+                            <li>Zoom and pan controls for detailed inspection</li>
+                        </ul>
+                    </li>
+                    <li><strong>Results Display:</strong>
+                        <ul>
+                            <li>Color-coded change visualization (red for changes)</li>
+                            <li>Statistics: Changed area percentage, pixel counts</li>
+                            <li>Confidence map visualization</li>
+                            <li>Comparison with ground truth if available</li>
+                        </ul>
+                    </li>
+                    <li><strong>User Controls:</strong>
+                        <ul>
+                            <li>Process button to trigger inference</li>
+                            <li>Download button to save predictions</li>
+                            <li>Toggle between different visualization modes</li>
+                            <li>Progress indicators during processing</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>Key Features Implemented</h3>
+
+                <h4>1. Real-Time Processing:</h4>
+                <ul>
+                    <li>Upload images and receive results within seconds</li>
+                    <li>Asynchronous processing to keep UI responsive</li>
+                    <li>Loading indicators and progress feedback</li>
+                </ul>
+
+                <h4>2. Interactive Visualization:</h4>
+                <ul>
+                    <li>Multiple view modes for different analysis needs</li>
+                    <li>Adjustable opacity overlays for change emphasis</li>
+                    <li>Zoom functionality for detailed inspection</li>
+                    <li>Toggle between RGB and change mask views</li>
+                </ul>
+
+                <h4>3. Comparison Tools:</h4>
+                <ul>
+                    <li>Side-by-side display of before/after/prediction</li>
+                    <li>Ground truth overlay for accuracy assessment</li>
+                    <li>Difference highlighting between prediction and ground truth</li>
+                    <li>Quantitative metrics display (IoU, F1-score)</li>
+                </ul>
+
+                <h4>4. Export Capabilities:</h4>
+                <ul>
+                    <li>Download predicted change masks</li>
+                    <li>Save comparison visualizations</li>
+                    <li>Export results with metadata (coordinates, timestamps)</li>
+                    <li>Batch processing support for multiple image pairs</li>
+                </ul>
+
+                <h3>Technical Implementation Details</h3>
+
+                <!-- <h4>Flask Backend Structure:</h4>
+                <div style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; margin: 10px 0; font-family: monospace; font-size: 0.9em;">
+                    <p style="color: #6a9955;"># Flask API endpoints</p>
+                    <p>@app.route('/upload', methods=['POST'])</p>
+                    <p>def upload_images():</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;# Handle before/after image upload</p>
+                    <p><br></p>
+                    <p>@app.route('/predict', methods=['POST'])</p>
+                    <p>def predict_changes():</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;# Run model inference</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;# Return change mask + metrics</p>
+                    <p><br></p>
+                    <p>@app.route('/download', methods=['GET'])</p>
+                    <p>def download_result():</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;# Export prediction as file</p>
+                </div> -->
+
+                <!-- <h4>JavaScript Frontend Functions:</h4>
+                <div style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; margin: 10px 0; font-family: monospace; font-size: 0.9em;">
+                    <p style="color: #6a9955;">// Handle image upload</p>
+                    <p>function uploadImages() { ... }</p>
+                    <p><br></p>
+                    <p style="color: #6a9955;">// Trigger model prediction</p>
+                    <p>function runPrediction() { ... }</p>
+                    <p><br></p>
+                    <p style="color: #6a9955;">// Visualize results</p>
+                    <p>function displayResults(mask) { ... }</p>
+                    <p><br></p>
+                    <p style="color: #6a9955;">// Toggle overlay opacity</p>
+                    <p>function adjustOverlay(opacity) { ... }</p>
+                </div> -->
+
+                <h3>Application Workflow</h3>
+                <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 15px 0; font-family: monospace; font-size: 0.9em;">
+                    <p>1. User uploads Before & After images</p>
+                    <p>↓</p>
+                    <p>2. Frontend sends images to Flask backend</p>
+                    <p>↓</p>
+                    <p>3. Backend preprocesses images (resize, normalize)</p>
+                    <p>↓</p>
+                    <p>4. Model performs inference (ViT-CNN)</p>
+                    <p>↓</p>
+                    <p>5. Post-process prediction (threshold, cleanup)</p>
+                    <p>↓</p>
+                    <p>6. Backend returns change mask + metrics</p>
+                    <p>↓</p>
+                    <p>7. Frontend displays interactive visualization</p>
+                    <p>↓</p>
+                    <p>8. User can adjust view, download results</p>
+                </div>
+
+                <h3>Benefits of Web Application Approach</h3>
+                <ul>
+                    <li><strong>Accessibility:</strong> No installation required, works in any web browser</li>
+                    <li><strong>User-Friendly:</strong> Intuitive interface for non-technical users</li>
+                    <li><strong>Real-Time Feedback:</strong> Immediate results and interactive visualization</li>
+                    <li><strong>Scalability:</strong> Can serve multiple users simultaneously</li>
+                    <li><strong>Iterative Testing:</strong> Easy to test model with new data</li>
+                    <li><strong>Deployment Ready:</strong> Framework prepared for production use</li>
+                </ul>
+
+                <h3>Application Use Cases</h3>
+                <ul>
+                    <li><strong>Disaster Response Teams:</strong> Quick assessment of damage extent</li>
+                    <li><strong>Research Validation:</strong> Compare model predictions with expert annotations</li>
+                    <li><strong>Model Development:</strong> Rapid testing during model improvement</li>
+                    <li><strong>Dataset Quality Check:</strong> Identify problematic samples</li>
+                    <li><strong>Public Demonstration:</strong> Showcase project capabilities</li>
+                </ul>
+
+                <!-- <h3>Testing and Validation</h3>
+                <p>
+                    Tested the application with various scenarios:
+                    <ul>
+                        <li>Different disaster types (floods, landslides)</li>
+                        <li>Various image sizes and resolutions</li>
+                        <li>Edge cases (minimal change, extensive change)</li>
+                        <li>Multiple browser compatibility</li>
+                        <li>Performance under load</li>
+                    </ul>
+                    The application successfully handles all test cases and provides consistent, reliable results.
+                </p> -->
+            </div>
+
+            <div class="media-section">
+                <h2>Documentation & Media</h2>
+                
+                <h3>Web Application Interface</h3>
+                <div >
+                        <!-- <p><strong>Annotation Tool Interface:</strong> Main interface showing image overlay and drawing tools</p> -->
+                        <img class="image"  src="week10/images/tool_interface.png" alt="annotator" style="width:100%; max-width:500px;">
+                </div>
+
+
+                <h3>Area selection and analyse example</h3>
+                <div >
+                        <!-- <p><strong>Annotation Tool Interface:</strong> Main interface showing image overlay and drawing tools</p> -->
+                        <img class="image"  src="week10/images/image_input.png" alt="annotator" style="width:100%; max-width:500px;">
+                </div>
+
+<!-- 
+                <h3>Prediction Visualization</h3>
+                <div style="padding: 50px; background: #f0f0f0; text-align: center; margin: 10px 0; border: 2px dashed #ccc;">
+                    [Insert: Side-by-side view with before/after/prediction]
+                </div>
+
+                <h3>Overlay View with Opacity Control</h3>
+                <div style="padding: 50px; background: #f0f0f0; text-align: center; margin: 10px 0; border: 2px dashed #ccc;">
+                    [Insert: Change mask overlay with opacity slider]
+                </div>
+
+                <h3>Results with Metrics</h3>
+                <div style="padding: 50px; background: #f0f0f0; text-align: center; margin: 10px 0; border: 2px dashed #ccc;">
+                    [Insert: Results display with IoU, F1-score, changed area %]
+                </div> -->
+
+                <h3>Application Features Summary</h3>
+                <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 15px 0;">
+                    <ul style="list-style-type: none; padding-left: 0;">
+                        <li>🌐 <strong>Backend:</strong> Flask server with RESTful API</li>
+                        <li>💻 <strong>Frontend:</strong> Interactive JavaScript interface</li>
+                        <li>📤 <strong>Upload:</strong> Drag-and-drop image upload</li>
+                        <li>🤖 <strong>Processing:</strong> Real-time model inference</li>
+                        <li>👁️ <strong>Visualization:</strong> Multiple view modes</li>
+                        <li>📊 <strong>Metrics:</strong> IoU, F1-score, changed area</li>
+                        <li>💾 <strong>Export:</strong> Download predictions and visualizations</li>
+                        <li>⚡ <strong>Performance:</strong> Fast inference (<5 seconds)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="next-steps">
+                <h2>Next Week's Plan</h2>
+                <ul>
+                    <li>Enhance web application with additional features (batch processing)</li>
+                    <li>Optimize model inference speed for production deployment</li>
+                    <li>Conduct user testing with disaster management professionals</li>
+                    <li>Gather feedback on interface usability and functionality</li>
+                    <li>Continue expanding dataset with new disaster events</li>
+                    <li>Fine-tune model with additional training data</li>
+                    <li>Prepare documentation for application deployment</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="week-navigation">
+            <a href="week9.html" class="prev"><i class="fas fa-arrow-left"></i> Previous Week</a>
+            <a href="week11.html" class="next">Next Week <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                <p><i class="fas fa-envelope"></i> e20293@eng.pdn.ac.lk</p>
+                <p><i class="fas fa-university"></i> University Of Peradeniya</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

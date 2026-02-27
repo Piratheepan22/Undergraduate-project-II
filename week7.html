@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 7 - Undergraduate Project Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Remote Sensing Of Environment Using Hyperspectral Image Sensing</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn active">Weekly Updates <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="week1.html">Week 1</a>
+                        <a href="week2.html">Week 2</a>
+                        <a href="week3.html">Week 3</a>
+                        <a href="week4.html">Week 4</a>
+                        <a href="week5.html">Week 5</a>
+                        <a href="week6.html">Week 6</a>
+                        <a href="week7.html">Week 7</a>
+                        <a href="week8.html">Week 8</a>
+                        <a href="week9.html">Week 9</a>
+                        <a href="week10.html">Week 10</a>
+                        <a href="week11.html">Week 11</a>
+                        <a href="week12.html">Week 12</a>
+                        <a href="week13.html">Week 13</a>
+                    </div>
+                </li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="weekly-update">
+        <section class="week-header">
+            <h1>Week 7</h1>
+        </section>
+
+        <section class="week-content">
+            <div class="overview">
+                <h2>Overview</h2>
+                <p>
+                    This week focused on leveraging the multispectral capabilities of our expanded dataset by computing 
+                    and analyzing <strong>spectral indices</strong> for change detection. I explored NDVI (Normalized Difference 
+                    Vegetation Index) and NDWI (Normalized Difference Water Index) to better understand vegetation and moisture 
+                    changes in disaster-affected areas. Additionally, I enhanced our annotation methodology to capture both 
+                    <strong>immediate (Before→During)</strong> and <strong>persistent (Before→After)</strong> changes, providing 
+                    richer ground truth labels for model training.
+                </p>
+            </div>
+
+            <div class="text-content">
+                <h2>Detailed Update</h2>
+                
+                <h3>Spectral Indices for Change Detection</h3>
+                <p>
+                    With the 13-band MSI data collected last week, I can now compute spectral indices that highlight 
+                    specific environmental characteristics invisible in RGB imagery. These indices are mathematical 
+                    combinations of spectral bands that enhance certain features while suppressing others.
+                </p>
+
+                <h4>Key Indices Explored:</h4>
+                <ul>
+                    <li><strong>NDVI (Normalized Difference Vegetation Index):</strong>
+                        <ul>
+                            <li>Formula: (NIR - Red) / (NIR + Red)</li>
+                            <li>Uses Band 8 (NIR) and Band 4 (Red)</li>
+                            <li>Detects vegetation health, coverage, and stress</li>
+                            <li>Values range from -1 to +1 (higher = healthier vegetation)</li>
+                        </ul>
+                    </li>
+                    <li><strong>NDWI (Normalized Difference Water Index):</strong>
+                        <ul>
+                            <li>Formula: (NIR - SWIR) / (NIR + SWIR)</li>
+                            <li>Uses Band 8 (NIR) and Band 11 (SWIR 1)</li>
+                            <li>Detects water content and moisture levels</li>
+                            <li>Effective for flood extent mapping</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>Delta-Index Change Detection</h3>
+                <p>
+                    Rather than analyzing indices in isolation, I computed <strong>delta (Δ) values</strong> to quantify 
+                    changes between time periods:
+                </p>
+                <ul>
+                    <li><strong>Δ(Before→During):</strong> Index_during - Index_before = Immediate disaster impact</li>
+                    <li><strong>Δ(Before→After):</strong> Index_after - Index_before = Persistent post-disaster change</li>
+                </ul>
+                <p>
+                    These delta maps highlight areas of significant change, making them useful baseline features for 
+                    change detection models. For example:
+                    <ul>
+                        <li>Large negative NDVI delta = Vegetation loss (landslide, severe flooding)</li>
+                        <li>Large positive NDWI delta = Water accumulation (flooding)</li>
+                    </ul>
+                </p>
+
+                <h3>Tasks Completed This Week:</h3>
+                <ul>
+                    <li>Computed NDVI and NDWI for sample locations using MSI bands</li>
+                    <li>Generated delta-index maps for Before→During and Before→After periods</li>
+                    <li>Analyzed index behavior in flood and landslide-affected areas</li>
+                    <li>Enhanced annotation protocol to include dual temporal masks</li>
+                    <li>Updated annotation tool workflow for tri-temporal labeling</li>
+                    <li>Read research papers on NDVI and NDWI interpretation and applications</li>
+                    <li>Documented index computation methodology and normalization procedures</li>
+                    <li>Created sample visualizations showing index-based change detection</li>
+                </ul>
+
+                <h3>Enhanced Annotation Methodology</h3>
+                <p>
+                    Previously, we created single binary masks comparing Before and After images. This week, I upgraded 
+                    the annotation approach to capture <strong>two separate masks</strong> from each image triplet:
+                </p>
+                <ol>
+                    <li><strong>Before→During Mask:</strong>
+                        <ul>
+                            <li>Captures changes occurring during the disaster event</li>
+                            <li>Identifies immediate impacts (active flooding, fresh landslides)</li>
+                            <li>Useful for rapid damage assessment scenarios</li>
+                        </ul>
+                    </li>
+                    <li><strong>Before→After Mask:</strong>
+                        <ul>
+                            <li>Captures persistent changes after the event</li>
+                            <li>Includes both immediate damage and secondary effects</li>
+                            <li>Better represents final damage extent</li>
+                        </ul>
+                    </li>
+                </ol>
+                <p>
+                    This dual annotation approach provides richer training data, allowing models to learn both immediate 
+                    event detection and longer-term impact assessment. Some changes may only be visible in one timeframe 
+                    (e.g., temporary flooding in During image but subsided in After image).
+                </p>
+
+                <h3>Spectral Index Characteristics</h3>
+                <p>
+                    Understanding how these indices respond to different land cover types:
+                </p>
+                <ul>
+                    <li><strong>NDVI Behavior:</strong>
+                        <ul>
+                            <li>Healthy vegetation: 0.6 to 0.9</li>
+                            <li>Sparse vegetation: 0.2 to 0.5</li>
+                            <li>Bare soil / Urban: 0.0 to 0.2</li>
+                            <li>Water bodies: Negative values</li>
+                        </ul>
+                    </li>
+                    <li><strong>NDWI Behavior:</strong>
+                        <ul>
+                            <li>Water bodies: Positive values (>0.3)</li>
+                            <li>Vegetation with moisture: 0 to 0.3</li>
+                            <li>Built-up / Bare soil: Negative values</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>Why Indices Improve Change Detection</h3>
+                <ul>
+                    <li><strong>Normalized values:</strong> Reduces effects of illumination differences between dates</li>
+                    <li><strong>Feature enhancement:</strong> Amplifies specific change types (vegetation loss, water gain)</li>
+                    <li><strong>Complementary information:</strong> NDVI + NDWI together separate different change causes</li>
+                    <li><strong>Threshold-friendly:</strong> Clear value ranges make simple thresholding effective</li>
+                    <li><strong>Physical meaning:</strong> Indices relate directly to biophysical properties</li>
+                </ul>
+
+                <h3>Research Papers Reviewed</h3>
+                <p>
+                    I studied two key papers to understand index behavior and interpretation:
+                </p>
+                <ul>
+                    <li><strong>NDWI Paper:</strong> Focused on water and moisture detection, explained SWIR band sensitivity 
+                    to water content, provided interpretation guidelines for different NDWI ranges</li>
+                    <li><strong>Spatial Patterns of NDVI:</strong> Analyzed NDVI spatial patterns from Sentinel-2, discussed 
+                    vegetation greenness monitoring, addressed seasonal variation considerations</li>
+                </ul>
+
+                <h3>Key Learnings</h3>
+                <ul>
+                    <li>NDVI and NDWI complement each other—NDVI tracks greenness, NDWI tracks moisture</li>
+                    <li>Combining multiple indices helps separate change types (flood vs. landslide vs. seasonal)</li>
+                    <li>Delta maps provide quick visual assessment of change magnitude and location</li>
+                    <li>Dual temporal masks capture both immediate and persistent changes more completely</li>
+                    <li>Band alignment and quality are crucial for reliable index comparisons</li>
+                    <li>Indices can serve as both features for ML models and standalone change indicators</li>
+                </ul>
+            </div>
+
+            <div class="media-section">
+                <h2>Documentation & Media</h2>
+                
+                <h3>Index Computation Examples</h3>
+                <p>Sample code for computing spectral indices:</p>
+                <div style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; margin: 10px 0; font-family: monospace; font-size: 0.9em; overflow-x: auto;">
+                    <p style="color: #6a9955;">// NDVI calculation</p>
+                    <p>NDVI = (NIR - Red) / (NIR + Red)</p>
+                    <p>NDVI = (Band8 - Band4) / (Band8 + Band4)</p>
+                    <p><br></p>
+                    <p style="color: #6a9955;">// NDWI calculation</p>
+                    <p>NDWI = (NIR - SWIR) / (NIR + SWIR)</p>
+                    <p>NDWI = (Band8 - Band11) / (Band8 + Band11)</p>
+                    <p><br></p>
+                    <p style="color: #6a9955;">// Delta computation</p>
+                    <p>Δ_NDVI_immediate = NDVI_during - NDVI_before</p>
+                    <p>Δ_NDVI_persistent = NDVI_after - NDVI_before</p>
+                </div>
+<!-- 
+                <h3>Tri-Temporal Annotation Example</h3>
+                <div style="padding: 60px; background: #f0f0f0; text-align: center; margin: 10px 0; border: 2px dashed #ccc;">
+                    [Insert: Image showing Before/During/After triplet with dual masks]
+                </div>
+ -->
+                <!-- <h3>NDVI Delta Map Example</h3>
+                <div style="padding: 50px; background: #f0f0f0; text-align: center; margin: 10px 0; border: 2px dashed #ccc;">
+                    [Insert: NDVI delta map showing vegetation loss in landslide areas]
+                </div>
+
+                <h3>NDWI Delta Map Example</h3>
+                <div style="padding: 50px; background: #f0f0f0; text-align: center; margin: 10px 0; border: 2px dashed #ccc;">
+                    [Insert: NDWI delta map showing flood extent]
+                </div> -->
+
+                <!-- <h3>Research Papers</h3>
+                <p>Papers reviewed this week on spectral indices:</p>
+                <div style="padding: 20px; background: #f9f9f9; border-radius: 8px; margin: 10px 0;">
+                    <p><strong>1. NDWI Paper</strong></p>
+                    <p style="font-size: 0.9em; color: #666;">Water and moisture-sensitive index behavior and interpretation</p>
+                    <p style="margin-top: 10px;">
+                        <a href="Papers/NDWI.pdf" target="_blank" style="color: #3498db;">View PDF</a>
+                    </p>
+                </div>
+                <div style="padding: 20px; background: #f9f9f9; border-radius: 8px; margin: 10px 0;">
+                    <p><strong>2. Spatial Patterns of NDVI Vegetation Greenness</strong></p>
+                    <p style="font-size: 0.9em; color: #666;">Spatial behavior of NDVI/NDWI from Sentinel-2 imagery</p>
+                    <p style="margin-top: 10px;">
+                        <a href="Papers/Spatial%20Patterns%20of%20NDVI%20Vegetation%20Greennesspdf.pdf" target="_blank" style="color: #3498db;">View PDF</a>
+                    </p>
+                </div> -->
+            </div>
+
+            <!-- <div class="next-steps">
+                <h2>Next Week's Plan</h2>
+                <ul>
+                    <li>Compute NDVI and NDWI for all locations in the dataset</li>
+                    <li>Establish consistent normalization and threshold rules for indices</li>
+                    <li>Complete dual temporal annotation (Before→During and Before→After) for priority locations</li>
+                    <li>Explore additional indices: NBR (Normalized Burn Ratio), NDBI (Built-up Index)</li>
+                    <li>Create visualization tools for comparing index-based vs. RGB-based change detection</li>
+                    <li>Begin experimenting with index features for baseline change detection model</li>
+                </ul>
+            </div> -->
+        </section>
+
+        <div class="week-navigation">
+            <a href="week6.html" class="prev"><i class="fas fa-arrow-left"></i> Previous Week</a>
+            <a href="week8.html" class="next">Next Week <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                <p><i class="fas fa-envelope"></i> e20293@eng.pdn.ac.lk</p>
+                <p><i class="fas fa-university"></i> University Of Peradeniya</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
