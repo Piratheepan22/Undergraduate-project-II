@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 12 - Undergraduate Project Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Remote Sensing Of Environment Using Hyperspectral Image Sensing</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn active">Weekly Updates <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="week1.html">Week 1</a>
+                        <a href="week2.html">Week 2</a>
+                        <a href="week3.html">Week 3</a>
+                        <a href="week4.html">Week 4</a>
+                        <a href="week5.html">Week 5</a>
+                        <a href="week6.html">Week 6</a>
+                        <a href="week7.html">Week 7</a>
+                        <a href="week8.html">Week 8</a>
+                        <a href="week9.html">Week 9</a>
+                        <a href="week10.html">Week 10</a>
+                        <a href="week11.html">Week 11</a>
+                        <a href="week12.html">Week 12</a>
+                        <a href="week13.html">Week 13</a>
+                    </div>
+                </li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="weekly-update">
+        <section class="week-header">
+            <h1>Week 12</h1>
+        </section>
+
+        <section class="week-content">
+            <div class="overview">
+                <h2>Overview</h2>
+                <p>
+                    This week involved comprehensive <strong>dataset auditing and expansion</strong> to broaden the scope 
+                    beyond flood-focused imagery. I conducted a thorough review of our current dataset coverage across Sri Lanka, 
+                    mapped spatial distribution patterns, and expanded to include <strong>tsunami and wildfire</strong> disasters 
+                    with bi-temporal image pairs and binary change masks. Additionally, I developed event-specific GEE export 
+                    templates tailored to the temporal dynamics of different disaster types, and studied change detection research 
+                    papers to improve dataset structure and documentation quality for future release.
+                </p>
+            </div>
+
+            <div class="text-content">
+                <h2>Detailed Update</h2>
+                
+                <h3>Dataset Audit and Coverage Analysis</h3>
+                <p>
+                    With significant data collected over previous weeks, this week began with a systematic audit to assess 
+                    current coverage, identify gaps, and plan strategic expansion.
+                </p>
+
+                <h4>Current Dataset Status:</h4>
+                <ul>
+                    <li><strong>Total Images:</strong> 272 images collected across Sri Lanka</li>
+                    <li><strong>Primary Focus:</strong> Flood events (tri-temporal: Before/During/After)</li>
+                    <li><strong>Geographic Spread:</strong> Multiple districts with varying density</li>
+                    <li><strong>Data Types:</strong> RGB imagery, MSI 13-band data, binary masks, spectral indices</li>
+                </ul>
+
+                <h4>Spatial Distribution Analysis:</h4>
+                <p>
+                    I created a coverage map showing tile center distribution across Sri Lanka, revealing:
+                    <ul>
+                        <li><strong>Dense zones:</strong> Western Province (Colombo, Gampaha) and Central highlands</li>
+                        <li><strong>Moderate coverage:</strong> Eastern Province (Trincomalee area), North-Central regions</li>
+                        <li><strong>Sparse zones:</strong> Northern Province, some Southern coastal areas</li>
+                        <li><strong>Insight:</strong> Coverage aligns with major flood-prone river basins and population centers</li>
+                    </ul>
+                </p>
+
+                <h3>Multi-Hazard Dataset Expansion</h3>
+                <p>
+                    To increase dataset versatility and research applicability, I expanded beyond floods to include 
+                    tsunami and wildfire events, shifting to a bi-temporal (Before/After) structure standard in change detection research.
+                </p>
+
+                <h4>Why Expand to Multi-Hazard:</h4>
+                <ul>
+                    <li>Broader applicability for disaster monitoring systems</li>
+                    <li>Enables model generalization across different change types</li>
+                    <li>Aligns with standard change detection benchmarks</li>
+                    <li>Increases dataset research value and citation potential</li>
+                </ul>
+
+                <h3>Tasks Completed This Week:</h3>
+                <ul>
+                    <li>Conducted comprehensive audit of 272 collected images</li>
+                    <li>Created spatial distribution map showing tile centers across Sri Lanka</li>
+                    <li>Analyzed coverage density and identified underrepresented regions</li>
+                    <li>Expanded dataset scope from flood-only to multi-hazard (tsunami, wildfire)</li>
+                    <li>Transitioned from tri-temporal to bi-temporal structure for new hazard types</li>
+                    <li>Developed event-specific GEE export templates for tsunami and wildfire scenarios</li>
+                    <li>Collected wildfire image pairs from California 2021 fire season (7 samples)</li>
+                    <li>Created binary change masks for wildfire samples</li>
+                    <li>Reviewed change detection research papers for dataset design best practices</li>
+                    <li>Documented naming conventions and metadata standards</li>
+                </ul>
+
+                <h3>Event-Specific GEE Templates</h3>
+                <p>
+                    Different disaster types have distinct temporal dynamics requiring tailored image selection strategies:
+                </p>
+
+                <h4>Temporal Windows by Hazard Type:</h4>
+                <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+                    <thead style="background: #3498db; color: white;">
+                        <tr>
+                            <th style="padding: 10px; border: 1px solid #ddd;">Event Type</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">BEFORE Window</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">ON/DURING Window</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">AFTER Window</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;"><strong>Flood</strong></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">-90 days</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">±3 days</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">+10 days</td>
+                        </tr>
+                        <tr style="background: #f9f9f9;">
+                            <td style="padding: 10px; border: 1px solid #ddd;"><strong>Tsunami</strong></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">-120 to -30 days</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">0 to +10 days (fallback: +30, +60)</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">+30 to +120 days</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;"><strong>Wildfire</strong></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">-90 to -14 days</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">0 to +5 days (fallback: +14, +30)</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">+30 to +120 days</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Tsunami Template Considerations:</h4>
+                <ul>
+                    <li>Longer BEFORE window accounts for seasonal coastal variations</li>
+                    <li>Extended AFTER window captures recovery and reconstruction</li>
+                    <li>Fallback dates handle cloud occlusion during monsoon periods</li>
+                    <li>Focus on coastal and low-lying areas</li>
+                </ul>
+
+                <h4>Wildfire Template Considerations:</h4>
+                <ul>
+                    <li>Shorter ON window captures active fire period</li>
+                    <li>Haze proxy selection (low blue band values) for smoke-affected scenes</li>
+                    <li>SWIR bands particularly valuable for burn scar detection</li>
+                    <li>Extended AFTER window shows vegetation recovery</li>
+                </ul>
+
+                <h3>Wildfire Dataset Sample - California 2021</h3>
+                <p>
+                    Collected 7 bi-temporal image pairs from California 2021 wildfire season as proof-of-concept:
+                    <ul>
+                        <li><strong>Structure:</strong> Before RGB + After RGB + Binary Change Mask</li>
+                        <li><strong>Change Type:</strong> Burn scars, vegetation loss, infrastructure damage</li>
+                        <li><strong>Resolution:</strong> 10m Sentinel-2 imagery</li>
+                        <li><strong>Mask Generation:</strong> Manually annotated burned areas</li>
+                    </ul>
+                </p>
+
+                <h3>Research Paper Review Insights</h3>
+                <p>
+                    Studied benchmark change detection papers to improve dataset quality and documentation:
+                </p>
+
+                <h4>Key Takeaways Applied:</h4>
+                <ul>
+                    <li><strong>Clear Triplet Structure:</strong> Standardized Before/After/Mask organization</li>
+                    <li><strong>Reproducible Splits:</strong> Defined train/val/test splits from the start</li>
+                    <li><strong>Transparent Metadata:</strong> Document acquisition dates, coordinates, preprocessing steps</li>
+                    <li><strong>Evaluation Protocols:</strong> Establish baseline metrics (IoU, F1-score)</li>
+                    <li><strong>Known Limitations:</strong> Explicitly state sampling bias and coverage gaps</li>
+                    <li><strong>Visual Examples:</strong> Include representative samples showing dataset difficulty</li>
+                </ul>
+
+                <h4>Papers Reviewed:</h4>
+                <ul>
+                    <li><strong>WHU Change Detection Dataset:</strong> Benchmark dataset organization and presentation style</li>
+                    <li><strong>Urban Built-Up Area Detection:</strong> Temporal comparison framing for land-cover change</li>
+                    <li>Both papers emphasize standardization, clear documentation, and baseline-ready structure</li>
+                </ul>
+
+                <h3>Dataset Structure Improvements</h3>
+                <p>
+                    Based on paper review, implemented the following improvements:
+                </p>
+                <ul>
+                    <li><strong>Naming Convention:</strong> [Event]_[Location]_[Date]_[Type].tif</li>
+                    <li><strong>Metadata Schema:</strong> JSON files with coordinates, timestamps, disaster type, data source</li>
+                    <li><strong>Organization:</strong> Separate folders by disaster type → location → temporal phase</li>
+                    <li><strong>Mask Format:</strong> Binary PNG/GeoTIFF (0=no change, 255=change)</li>
+                    <li><strong>Documentation:</strong> README files explaining structure and usage</li>
+                </ul>
+
+                <h3>Benefits of Multi-Hazard Approach</h3>
+                <ul>
+                    <li>Models trained on diverse disasters generalize better</li>
+                    <li>Dataset suitable for multi-task learning frameworks</li>
+                    <li>Increased research community interest and usability</li>
+                    <li>Enables disaster-type classification in addition to change detection</li>
+                    <li>Broader impact for global disaster monitoring applications</li>
+                </ul>
+            </div>
+
+            <div class="media-section">
+                <h2>Documentation & Media</h2>
+                
+                <h3>Sri Lanka Coverage Map</h3>
+                <p>Spatial distribution of 272 collected image tile centers:</p>
+                <div style="padding: 2px; background: #f0f0f0; text-align: center; margin: 10px 0; border: 2px dashed #ccc;">
+                      <img class="image"  src="week12/images/srilanka.png" alt="annotator" style="width:100%; max-width:500px;">
+                </div>
+
+                <h3>Wildfire Sample - California 2021</h3>
+                <p>Example bi-temporal pairs with binary change masks:</p>
+                
+                <div style="margin: 20px 0;">
+                    <h4 style="margin-bottom: 10px;">Sample 1</h4>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                        <div style="padding: 40px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                           <img class="image"  src="week12/images/img1.png" alt="annotator" style="width:100%; max-width:500px;">
+                        </div>
+                        <div style="padding: 40px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                            <img class="image"  src="week12/images/img2.png" alt="annotator" style="width:100%; max-width:500px;">
+                        </div>
+                        <div style="padding: 40px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                            <img class="image"  src="week12/images/img3.png" alt="annotator" style="width:100%; max-width:500px;">
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin: 20px 0;">
+                    <h4 style="margin-bottom: 10px;">Sample 2</h4>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                        <div style="padding: 40px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                             <img class="image"  src="week12/images/img4.png" alt="annotator" style="width:100%; max-width:500px;">
+                        </div>
+                        <div style="padding: 40px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                            <img class="image"  src="week12/images/img5.png" alt="annotator" style="width:100%; max-width:500px;">
+                        </div>
+                        <div style="padding: 40px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                            <img class="image"  src="week12/images/img6.png" alt="annotator" style="width:100%; max-width:500px;">
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin: 20px 0;">
+                    <h4 style="margin-bottom: 10px;">Sample 2</h4>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                        <div style="padding: 40px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                             <img class="image"  src="week12/images/img7.png" alt="annotator" style="width:100%; max-width:500px;">
+                        </div>
+                        <div style="padding: 40px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                            <img class="image"  src="week12/images/img8.png" alt="annotator" style="width:100%; max-width:500px;">
+                        </div>
+                        <div style="padding: 40px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                            <img class="image"  src="week12/images/img9.png" alt="annotator" style="width:100%; max-width:500px;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <p style="margin-top: 15px; font-style: italic; color: #666;">
+                    [Additional samples 3-7 follow same structure]
+                </p> -->
+
+                <h3>GEE Template Code Snippets</h3>
+                <div style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; margin: 10px 0; font-family: monospace; font-size: 0.9em;">
+                    <p style="color: #6a9955;">// Tsunami template - extended windows</p>
+                    <p>var beforeWindow = [-120, -30];</p>
+                    <p>var onWindows = [10, 30, 60];</p>
+                    <p>var afterWindow = [30, 120];</p>
+                    <p><br></p>
+                    <p style="color: #6a9955;">// Wildfire template - smoke-aware selection</p>
+                    <p>var beforeWindow = [-90, -14];</p>
+                    <p>var onWindows = [5, 14, 30];</p>
+                    <p>var afterWindow = [30, 120];</p>
+                    <p>// Include haze proxy for smoke filtering</p>
+                </div>
+
+                <!-- <h3>Research Papers</h3>
+                <div style="padding: 20px; background: #f9f9f9; border-radius: 8px; margin: 10px 0;">
+                    <p><strong>1. WHU Change Detection Dataset</strong></p>
+                    <p style="font-size: 0.9em; color: #666;">Benchmark structure and organization standards</p>
+                    <p style="margin-top: 10px;">
+                        <a href="Papers/whucd.pdf" target="_blank" style="color: #3498db;">View PDF</a>
+                    </p>
+                </div>
+                <div style="padding: 20px; background: #f9f9f9; border-radius: 8px; margin: 10px 0;">
+                    <p><strong>2. Detection of Urban Built-Up Area Change</strong></p>
+                    <p style="font-size: 0.9em; color: #666;">Temporal comparison methodology</p>
+                    <p style="margin-top: 10px;">
+                        <a href="Papers/Detection_of_Urban_Built-Up_Area_Change_From_Senti.pdf" target="_blank" style="color: #3498db;">View PDF</a>
+                    </p>
+                </div> -->
+            </div>
+
+            <div class="next-steps">
+                <h2>Next Week's Plan</h2>
+                <ul>
+                    <li>Complete wildfire sample collection (target: 20+ samples)</li>
+                    <li>Begin tsunami dataset collection using developed GEE template</li>
+                    <li>Create binary masks for all newly collected wildfire and tsunami pairs</li>
+                    <li>Implement automated quality checks for collected image pairs</li>
+                    <li>Expand coverage in sparse zones identified in spatial analysis</li>
+                    <li>Finalize dataset documentation structure and metadata templates</li>
+                    <li>Begin preparing dataset for potential public release</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="week-navigation">
+            <a href="week11.html" class="prev"><i class="fas fa-arrow-left"></i> Previous Week</a>
+            <a href="week13.html" class="next">Next Week <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                <p><i class="fas fa-envelope"></i> e20293@eng.pdn.ac.lk</p>
+                <p><i class="fas fa-university"></i> University Of Peradeniya</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

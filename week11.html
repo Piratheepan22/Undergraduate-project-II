@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 11 - Undergraduate Project Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Remote Sensing Of Environment Using Hyperspectral Image Sensing</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn active">Weekly Updates <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="week1.html">Week 1</a>
+                        <a href="week2.html">Week 2</a>
+                        <a href="week3.html">Week 3</a>
+                        <a href="week4.html">Week 4</a>
+                        <a href="week5.html">Week 5</a>
+                        <a href="week6.html">Week 6</a>
+                        <a href="week7.html">Week 7</a>
+                        <a href="week8.html">Week 8</a>
+                        <a href="week9.html">Week 9</a>
+                        <a href="week10.html">Week 10</a>
+                        <a href="week11.html">Week 11</a>
+                        <a href="week12.html">Week 12</a>
+                        <a href="week13.html">Week 13</a>
+                    </div>
+                </li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="weekly-update">
+        <section class="week-header">
+            <h1>Week 11</h1>
+        </section>
+
+        <section class="week-content">
+            <div class="overview">
+                <h2>Overview</h2>
+                <p>
+                    Returning to MSI analysis work, this week focused on two parallel objectives: implementing a 
+                    <strong>cloud removal preprocessing pipeline</strong> for cloud-contaminated Sentinel-2 optical scenes 
+                    and <strong>expanding the tri-temporal dataset</strong> with new flood-prone locations across Sri Lanka. 
+                    I set up the DSen2-CR (Deep Sentinel-2 Cloud Removal) framework to reconstruct cloud-obscured regions, 
+                    improving the usability of optical imagery affected by monsoon cloud cover. Simultaneously, I collected 
+                    new Before/During/After triplets from critical flood zones including the Kelani River basin, Mahaweli 
+                    River near Trincomalee, and Negombo Lagoon, significantly increasing the geographic diversity of our dataset.
+                </p>
+            </div>
+
+            <div class="text-content">
+                <h2>Detailed Update</h2>
+                
+                <h3>Back to MSI: Cloud Removal Challenge</h3>
+                <p>
+                    While RGB model development progressed (Weeks 9-10), MSI dataset work continued with a critical 
+                    preprocessing challenge: cloud contamination. Sri Lanka's tropical monsoon climate means satellite 
+                    imagery is frequently obscured by clouds, especially during the disaster periods we're studying. 
+                    This week addressed this limitation head-on.
+                </p>
+
+                <h3>Tasks Completed This Week:</h3>
+                <ul>
+                    <li>Set up DSen2-CR cloud removal framework and environment</li>
+                    <li>Tested cloud removal pipeline on heavily cloud-contaminated Sentinel-2 scenes</li>
+                    <li>Generated cloud-free predictions for three test cases</li>
+                    <li>Evaluated reconstruction quality for different cloud density levels</li>
+                    <li>Expanded dataset with new tri-temporal samples from three major flood zones</li>
+                    <li>Collected Before/During/After triplets for Kelani River flood-prone area</li>
+                    <li>Acquired imagery for Mahaweli River basin near Trincomalee</li>
+                    <li>Gathered samples from Negombo Lagoon coastal flooding zone</li>
+                    <li>Documented cloud removal workflow and parameters</li>
+                    <li>Assessed impact of cloud removal on annotation consistency</li>
+                </ul>
+
+                <h3>Cloud Removal with DSen2-CR</h3>
+                
+                <h4>Why Cloud Removal Matters:</h4>
+                <p>
+                    Cloud occlusion is a fundamental challenge in optical satellite remote sensing:
+                    <ul>
+                        <li>Monsoon clouds frequently cover disaster-affected areas during critical time periods</li>
+                        <li>Cloud shadows obscure ground features and create false change signals</li>
+                        <li>Temporal analysis requires consistent visibility of the same location across time</li>
+                        <li>Manual annotation becomes unreliable when ground features are hidden</li>
+                        <li>Change detection models struggle with mixed cloud/clear training data</li>
+                    </ul>
+                    Effective cloud removal is essential for creating a robust, usable dataset.
+                </p>
+
+                <h4>DSen2-CR Framework:</h4>
+                <p>
+                    DSen2-CR (Deep Sentinel-2 Cloud Removal) uses a deep learning approach to reconstruct cloud-obscured regions:
+                    <ul>
+                        <li><strong>Architecture:</strong> Residual neural network trained specifically for Sentinel-2 data</li>
+                        <li><strong>Inputs:</strong> Cloud-contaminated optical image + SAR data for structural guidance</li>
+                        <li><strong>Output:</strong> Predicted cloud-free optical image</li>
+                        <li><strong>Key Feature:</strong> SAR (Synthetic Aperture Radar) is weather-independent and penetrates clouds</li>
+                        <li><strong>Advantage:</strong> Preserves scene structure using SAR guidance during reconstruction</li>
+                    </ul>
+                </p>
+
+                <h4>Implementation Process:</h4>
+                <ol>
+                    <li><strong>Environment Setup:</strong>
+                        <ul>
+                            <li>Cloned DSen2-CR repository from GitHub</li>
+                            <li>Configured Python environment with required dependencies</li>
+                            <li>Downloaded pre-trained model weights</li>
+                        </ul>
+                    </li>
+                    <li><strong>Data Preparation:</strong>
+                        <ul>
+                            <li>Selected cloud-contaminated Sentinel-2 scenes from our dataset</li>
+                            <li>Generated cloud masks identifying cloudy pixels</li>
+                            <li>Acquired corresponding Sentinel-1 SAR data for same locations and dates</li>
+                        </ul>
+                    </li>
+                    <li><strong>Cloud Removal Processing:</strong>
+                        <ul>
+                            <li>Fed cloud-contaminated optical + SAR data into DSen2-CR model</li>
+                            <li>Generated reconstructed cloud-free predictions</li>
+                            <li>Applied brightness enhancement for better visualization</li>
+                        </ul>
+                    </li>
+                    <li><strong>Quality Assessment:</strong>
+                        <ul>
+                            <li>Visual comparison: Original vs. Predicted cloud-free</li>
+                            <li>Evaluated structural preservation and artifact presence</li>
+                            <li>Assessed suitability for downstream annotation and analysis</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h3>Cloud Removal Results</h3>
+                <p>
+                    Tested the pipeline on three representative cloud-contaminated scenes with varying cloud coverage:
+                </p>
+                <ul>
+                    <li><strong>Set 1:</strong> Moderate cloud coverage (~40%)
+                        <ul>
+                            <li>Successful reconstruction of major features</li>
+                            <li>Preserved land-water boundaries</li>
+                            <li>Minor artifacts in dense cloud areas</li>
+                        </ul>
+                    </li>
+                    <li><strong>Set 2:</strong> Heavy cloud coverage (~70%)
+                        <ul>
+                            <li>Good structural preservation using SAR guidance</li>
+                            <li>Some texture differences in reconstructed areas</li>
+                            <li>Overall improvement in scene interpretability</li>
+                        </ul>
+                    </li>
+                    <li><strong>Set 3:</strong> Patchy cloud coverage (~50%)
+                        <ul>
+                            <li>Excellent results in partially obscured regions</li>
+                            <li>Smooth transitions between clear and reconstructed areas</li>
+                            <li>Suitable for annotation and analysis</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>Dataset Expansion: New Flood Zones</h3>
+                <p>
+                    Parallel to cloud removal work, I significantly expanded the dataset with new locations representing 
+                    diverse flood scenarios across Sri Lanka:
+                </p>
+
+                <h4>1. Kelani River Flood-Prone Area:</h4>
+                <ul>
+                    <li><strong>Location:</strong> Greater Colombo region, Western Province</li>
+                    <li><strong>Significance:</strong> Major urban flooding corridor affecting densely populated areas</li>
+                    <li><strong>Disaster Type:</strong> Riverine flooding during heavy monsoon rains</li>
+                    <li><strong>Coverage:</strong> Urban settlements, agricultural lands, infrastructure</li>
+                    <li><strong>Collected:</strong> Complete Before/During/After triplet with minimal cloud cover</li>
+                </ul>
+
+                <h4>2. Mahaweli River near Trincomalee:</h4>
+                <ul>
+                    <li><strong>Location:</strong> Eastern Province, Trincomalee District</li>
+                    <li><strong>Significance:</strong> Largest river basin in Sri Lanka, prone to seasonal flooding</li>
+                    <li><strong>Disaster Type:</strong> Large-scale riverine flooding affecting agricultural zones</li>
+                    <li><strong>Coverage:</strong> River delta, agricultural lands, rural settlements</li>
+                    <li><strong>Collected:</strong> High-quality triplet showing clear flood extent changes</li>
+                </ul>
+
+                <h4>3. Negombo Lagoon:</h4>
+                <ul>
+                    <li><strong>Location:</strong> Western coastal area, Gampaha District</li>
+                    <li><strong>Significance:</strong> Coastal lagoon system vulnerable to both flooding and storm surge</li>
+                    <li><strong>Disaster Type:</strong> Coastal flooding combined with lagoon overflow</li>
+                    <li><strong>Coverage:</strong> Lagoon margins, fishing communities, wetlands</li>
+                    <li><strong>Collected:</strong> Triplet capturing complex water dynamics and coastal impacts</li>
+                </ul>
+
+                <h3>Benefits of Dataset Expansion</h3>
+                <ul>
+                    <li><strong>Geographic Diversity:</strong> Covers Western, Eastern, and coastal zones</li>
+                    <li><strong>Flood Type Variety:</strong> Riverine, coastal, and lagoon flooding scenarios</li>
+                    <li><strong>Urban-Rural Mix:</strong> Includes both densely populated and agricultural areas</li>
+                    <li><strong>Model Generalization:</strong> More diverse training data improves model robustness</li>
+                    <li><strong>Validation Coverage:</strong> Better representation of Sri Lanka's flood vulnerability patterns</li>
+                </ul>
+
+                <h3>Integration Strategy</h3>
+                <p>
+                    Combining cloud removal and dataset expansion:
+                    <ul>
+                        <li>New triplets prioritized locations with better cloud-free availability</li>
+                        <li>Cloud removal applied selectively to "During" images when cloud-free alternatives unavailable</li>
+                        <li>Maintained original imagery where possible, used cloud-removed versions as fallback</li>
+                        <li>Documented which images underwent cloud removal for transparency in analysis</li>
+                    </ul>
+                </p>
+
+                <h3>Observations and Learnings</h3>
+                <ul>
+                    <li>Cloud removal significantly improves visual interpretability of heavily obscured scenes</li>
+                    <li>SAR-guided reconstruction preserves structural features better than purely optical methods</li>
+                    <li>Quality varies with cloud density—works best for moderate coverage</li>
+                    <li>Some texture artifacts appear in dense cloud areas but don't impede change detection</li>
+                    <li>New locations show different spectral characteristics, enriching dataset diversity</li>
+                    <li>Coastal and lagoon areas present unique challenges (water-land boundaries)</li>
+                </ul>
+            </div>
+
+            <div class="media-section">
+                <h2>Documentation & Media</h2>
+                
+                <h3>Cloud Removal Results</h3>
+                <p>Examples showing cloud mask, raw input, enhanced input, and predicted cloud-free output:</p>
+                
+                <!-- <h4>Set 1 - Moderate Cloud Coverage:</h4> -->
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 15px 0;">
+                    <div style="padding: 30px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        <img class="image"  src="week11/images/img1.png" alt="annotator" style="width:100%; max-width:500px;">
+                    </div>
+                    <div style="padding: 30px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        <img class="image"  src="week11/images/img2.png" alt="annotator" style="width:100%; max-width:500px;">
+                    </div>
+                    <div style="padding: 30px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        <img class="image"  src="week11/images/img3.png" alt="annotator" style="width:100%; max-width:500px;">
+                    </div>
+                    <div style="padding: 30px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        <img class="image"  src="week11/images/img4.png" alt="annotator" style="width:100%; max-width:500px;">
+                    </div>
+                </div>
+
+                <!-- <h4>Set 2 - Heavy Cloud Coverage:</h4> -->
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 15px 0;">
+                    <div style="padding: 30px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                          <img class="image"  src="week11/images/img5.png" alt="annotator" style="width:100%; max-width:500px;">
+                    </div>
+                    <div style="padding: 30px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                            <img class="image"  src="week11/images/img6.png" alt="annotator" style="width:100%; max-width:500px;">
+                    </div>
+                    <div style="padding: 30px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                           <img class="image"  src="week11/images/img7.png" alt="annotator" style="width:100%; max-width:500px;">
+                    </div>
+                    <div style="padding: 30px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                            <img class="image"  src="week11/images/img8.png" alt="annotator" style="width:100%; max-width:500px;">
+                    </div>
+                </div>
+
+                <!-- <h4>Set 3 - Patchy Cloud Coverage:</h4>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 15px 0;">
+                    <div style="padding: 30px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        [Cloud Mask 3]
+                    </div>
+                    <div style="padding: 30px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        [Raw Input 3]
+                    </div>
+                    <div style="padding: 30px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        [Enhanced 3]
+                    </div>
+                    <div style="padding: 30px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        [Prediction 3]
+                    </div>
+                </div> -->
+
+                <!-- <h3>New Dataset Triplets</h3>
+                
+                <h4>Kelani River Flood-Prone Area:</h4>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0;">
+                    <div style="padding: 40px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        [Before - Kelani]
+                    </div>
+                    <div style="padding: 40px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        [During - Kelani]
+                    </div>
+                    <div style="padding: 40px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        [After - Kelani]
+                    </div>
+                </div>
+
+                <h4>Mahaweli River near Trincomalee:</h4>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0;">
+                    <div style="padding: 40px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        [Before - Mahaweli]
+                    </div>
+                    <div style="padding: 40px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        [During - Mahaweli]
+                    </div>
+                    <div style="padding: 40px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        [After - Mahaweli]
+                    </div>
+                </div>
+
+                <h4>Negombo Lagoon:</h4>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0;">
+                    <div style="padding: 40px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        [Before - Negombo]
+                    </div>
+                    <div style="padding: 40px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        [During - Negombo]
+                    </div>
+                    <div style="padding: 40px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        [After - Negombo]
+                    </div>
+                </div> -->
+
+                <!-- <h3>DSen2-CR Reference Paper</h3>
+                <div style="padding: 20px; background: #f9f9f9; border-radius: 8px; margin: 10px 0;">
+                    <p><strong>DSen2-CR: Deep Sentinel-2 Cloud Removal</strong></p>
+                    <p style="font-size: 0.9em; color: #666;">Residual network approach with SAR guidance for cloud reconstruction</p>
+                    <p style="margin-top: 10px;">
+                        <a href="Papers/cloud.pdf" target="_blank" style="color: #3498db;">View Paper PDF</a> | 
+                        <a href="https://github.com/ameraner/dsen2-cr" target="_blank" style="color: #3498db; margin-left: 15px;">GitHub Repository</a>
+                    </p>
+                </div> -->
+            </div>
+
+            <div class="next-steps">
+                <h2>Next Week's Plan</h2>
+                <ul>
+                    <li>Process more cloud-contaminated scenes through DSen2-CR pipeline</li>
+                    <li>Compare annotation consistency on original vs. cloud-removed images</li>
+                    <li>Evaluate whether cloud-free predictions improve model training</li>
+                    <li>Complete annotation for new Kelani, Mahaweli, and Negombo triplets</li>
+                    <li>Finalize naming conventions and metadata standards across all triplets</li>
+                    <li>Integrate cloud-removed and new location data into main dataset</li>
+                    <li>Update dataset statistics and documentation</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="week-navigation">
+            <a href="week10.html" class="prev"><i class="fas fa-arrow-left"></i> Previous Week</a>
+            <a href="week12.html" class="next">Next Week <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                <p><i class="fas fa-envelope"></i> e20293@eng.pdn.ac.lk</p>
+                <p><i class="fas fa-university"></i> University Of Peradeniya</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

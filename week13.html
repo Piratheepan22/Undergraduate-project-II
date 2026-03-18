@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 13 - Undergraduate Project Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Remote Sensing Of Environment Using Hyperspectral Image Sensing</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn active">Weekly Updates <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="week1.html">Week 1</a>
+                        <a href="week2.html">Week 2</a>
+                        <a href="week3.html">Week 3</a>
+                        <a href="week4.html">Week 4</a>
+                        <a href="week5.html">Week 5</a>
+                        <a href="week6.html">Week 6</a>
+                        <a href="week7.html">Week 7</a>
+                        <a href="week8.html">Week 8</a>
+                        <a href="week9.html">Week 9</a>
+                        <a href="week10.html">Week 10</a>
+                        <a href="week11.html">Week 11</a>
+                        <a href="week12.html">Week 12</a>
+                        <a href="week13.html">Week 13</a>
+                    </div>
+                </li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="weekly-update">
+        <section class="week-header">
+            <h1>Week 13</h1>
+        </section>
+
+        <section class="week-content">
+            <div class="overview">
+                <h2>Overview</h2>
+                <p>
+                    This week focused on <strong>upgrading the web application</strong> developed in Week 10 and 
+                    <strong>integrating our trained change detection model</strong> into the backend for real-world testing. 
+                    I enhanced the Flask application with improved model loading mechanisms, optimized inference pipeline, 
+                    and added comprehensive testing capabilities. The upgraded interface now supports batch processing, 
+                    confidence visualization, and detailed performance metrics. Extensive testing was conducted using both 
+                    our collected Sri Lanka flood dataset and the newly acquired wildfire samples to validate model 
+                    performance across different disaster types.
+                </p>
+            </div>
+
+            <div class="text-content">
+                <h2>Detailed Update</h2>
+                
+                <h3>Web Application Enhancements</h3>
+                <p>
+                    Building on the initial web application framework from Week 10, this week involved significant 
+                    upgrades to support production-ready deployment and comprehensive model testing.
+                </p>
+
+                <h3>Tasks Completed This Week:</h3>
+                <ul>
+                    <li>Upgraded Flask backend with optimized model loading and inference pipeline</li>
+                    <li>Integrated trained ViT-CNN change detection model into production environment</li>
+                    <li>Implemented efficient model caching to reduce inference latency</li>
+                    <li>Added batch processing capability for multiple image pairs</li>
+                    <li>Enhanced frontend with confidence map visualization</li>
+                    <li>Developed performance metrics dashboard (IoU, F1-score, precision, recall)</li>
+                    <li>Implemented comparison mode for model predictions vs. ground truth</li>
+                    <li>Added export functionality for prediction results and metrics</li>
+                    <li>Created comprehensive testing suite for flood and wildfire scenarios</li>
+                    <li>Conducted performance benchmarking across different disaster types</li>
+                    <li>Optimized GPU utilization for faster inference</li>
+                    <li>Implemented error handling and logging for debugging</li>
+                </ul>
+
+                <h3>Backend Upgrades</h3>
+
+                <h4>1. Model Integration Improvements:</h4>
+                <ul>
+                    <li><strong>Smart Model Loading:</strong>
+                        <ul>
+                            <li>Load model once on server startup</li>
+                            <li>Keep model in GPU memory for fast inference</li>
+                            <li>Automatic CPU fallback if GPU unavailable</li>
+                            <li>Model warmup on initialization to eliminate first-call latency</li>
+                        </ul>
+                    </li>
+                    <li><strong>Optimized Inference Pipeline:</strong>
+                        <ul>
+                            <li>Batch preprocessing for multiple images</li>
+                            <li>Efficient tensor operations using PyTorch optimizations</li>
+                            <li>Mixed precision inference for faster processing</li>
+                            <li>Asynchronous processing for non-blocking operations</li>
+                        </ul>
+                    </li>
+                    <li><strong>Enhanced Post-Processing:</strong>
+                        <ul>
+                            <li>Configurable confidence thresholds</li>
+                            <li>Morphological cleanup (opening/closing)</li>
+                            <li>Connected component analysis for region extraction</li>
+                            <li>Multi-scale prediction aggregation</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <!-- <h4>2. New API Endpoints:</h4>
+                <div style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; margin: 10px 0; font-family: monospace; font-size: 0.9em;">
+                    <p style="color: #6a9955;">// Enhanced API endpoints</p>
+                    <p>@app.route('/predict/single', methods=['POST'])</p>
+                    <p style="color: #888;">// Single image pair prediction</p>
+                    <p><br></p>
+                    <p>@app.route('/predict/batch', methods=['POST'])</p>
+                    <p style="color: #888;">// Batch processing for multiple pairs</p>
+                    <p><br></p>
+                    <p>@app.route('/evaluate', methods=['POST'])</p>
+                    <p style="color: #888;">// Compare prediction vs ground truth</p>
+                    <p><br></p>
+                    <p>@app.route('/metrics', methods=['GET'])</p>
+                    <p style="color: #888;">// Retrieve performance statistics</p>
+                    <p><br></p>
+                    <p>@app.route('/export', methods=['POST'])</p>
+                    <p style="color: #888;">// Export results in various formats</p>
+                </div> -->
+
+                <h3>Frontend Enhancements</h3>
+
+                <h4>New Visualization Features:</h4>
+                <ul>
+                    <li><strong>Confidence Heatmap:</strong>
+                        <ul>
+                            <li>Color-coded visualization of prediction confidence</li>
+                            <li>Red (high confidence change) to blue (high confidence no-change)</li>
+                            <li>Helps identify uncertain regions</li>
+                            <li>Adjustable opacity overlay on original images</li>
+                        </ul>
+                    </li>
+                    <li><strong>Metrics Dashboard:</strong>
+                        <ul>
+                            <li>Real-time display of IoU, F1-score, precision, recall</li>
+                            <li>Confusion matrix visualization</li>
+                            <li>Changed area percentage and pixel counts</li>
+                            <li>Performance comparison across multiple runs</li>
+                        </ul>
+                    </li>
+                    <li><strong>Side-by-Side Comparison:</strong>
+                        <ul>
+                            <li>Before/After images with synchronized zoom</li>
+                            <li>Prediction mask overlay</li>
+                            <li>Ground truth overlay (when available)</li>
+                            <li>Difference highlighting (false positives/negatives)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Batch Results View:</strong>
+                        <ul>
+                            <li>Grid display of multiple predictions</li>
+                            <li>Sortable by metrics (IoU, F1-score)</li>
+                            <li>Quick navigation between results</li>
+                            <li>Aggregate statistics across batch</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>Model Testing and Validation</h3>
+
+                <h4>Test Scenarios Conducted:</h4>
+
+                <p><strong>1. Flood Detection (Sri Lanka Dataset):</strong></p>
+                <ul>
+                    <li>Tested on 30+ flood image pairs from various Sri Lankan locations</li>
+                    <li>Locations tested: Kelani River basin, Mahaweli River, Negombo Lagoon, and other flood-prone areas</li>
+                    <li>Disaster types: Urban flooding, riverine flooding, coastal flooding</li>
+                    <li>Results:
+                        <ul>
+                            <li>Average IoU: ~0.74</li>
+                            <li>Average F1-score: ~0.80</li>
+                            <li>Strong performance on clear flooding scenarios</li>
+                            <li>Excellent detection of water extent changes</li>
+                            <li>Some challenges with partial flooding and wet soil differentiation</li>
+                            <li>Good performance across different geographic regions</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <p><strong>2. Landslide Detection (Sri Lanka Dataset):</strong></p>
+                <ul>
+                    <li>Tested on 15+ landslide-affected locations from November 2024 disaster</li>
+                    <li>Regions tested: Ratnapura, Kegalle, hill country areas</li>
+                    <li>Change types: Landslide scars, vegetation loss, debris flows, infrastructure damage</li>
+                    <li>Results:
+                        <ul>
+                            <li>Average IoU: ~0.70</li>
+                            <li>Average F1-score: ~0.76</li>
+                            <li>Successfully identifies large landslide scars and slope failures</li>
+                            <li>Good detection of vegetation loss in affected areas</li>
+                            <li>Challenges with small debris flows in dense forested areas</li>
+                            <li>Some difficulty distinguishing landslides from natural bare soil in hilly terrain</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <p><strong>3. Mixed Impact Areas:</strong></p>
+                <ul>
+                    <li>Tested on locations affected by both floods and landslides</li>
+                    <li>Results:
+                        <ul>
+                            <li>Model successfully detects both change types simultaneously</li>
+                            <li>Combined disasters show higher change detection complexity</li>
+                            <li>Overall performance remains robust with Average IoU: ~0.72</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>Performance Analysis:</h4>
+                <ul>
+                    <li><strong>Inference Speed:</strong>
+                        <ul>
+                            <li>Single prediction: ~2-3 seconds (including preprocessing)</li>
+                            <li>Batch of 10: ~15 seconds (batched inference)</li>
+                            <li>GPU utilization: ~70-80% during inference</li>
+                        </ul>
+                    </li>
+                    <li><strong>Strengths Identified:</strong>
+                        <ul>
+                            <li>Excellent performance on water extent mapping (floods)</li>
+                            <li>Strong detection of large-scale vegetation loss (landslides)</li>
+                            <li>Robust to different lighting conditions and seasons</li>
+                            <li>Good boundary delineation for large change regions</li>
+                            <li>Handles Sri Lankan terrain variations well (coastal, riverine, mountainous)</li>
+                            <li>Effective across different disaster types within the same region</li>
+                        </ul>
+                    </li>
+                    <li><strong>Limitations Identified:</strong>
+                        <ul>
+                            <li>Occasional false positives in shadow areas (especially in mountainous terrain)</li>
+                            <li>Difficulty with very small change regions (<50 pixels)</li>
+                            <li>Some confusion between wet soil and shallow water in flood scenarios</li>
+                            <li>Challenges with partial cloud cover despite preprocessing efforts</li>
+                            <li>Small debris flows in dense vegetation can be missed</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>Batch Processing Implementation</h3>
+                <p>
+                    Added capability to process multiple image pairs in a single session:
+                </p>
+                <ul>
+                    <li>Upload multiple Before/After pairs via drag-and-drop or folder selection</li>
+                    <li>Automatic queuing and sequential processing</li>
+                    <li>Progress bar showing completion status</li>
+                    <li>Results displayed in sortable grid</li>
+                    <li>Export all results as ZIP file with metrics CSV</li>
+                    <li>Useful for dataset-wide evaluation and comparison</li>
+                </ul>
+
+                <h3>Export and Reporting Features</h3>
+                <ul>
+                    <li><strong>Export Formats:</strong>
+                        <ul>
+                            <li>GeoTIFF: Predictions with geospatial metadata preserved</li>
+                            <li>PNG: Visual results for presentations</li>
+                            <li>JSON: Detailed metrics and metadata</li>
+                            <li>CSV: Batch results summary</li>
+                        </ul>
+                    </li>
+                    <li><strong>Report Generation:</strong>
+                        <ul>
+                            <li>Automated PDF reports with predictions and metrics</li>
+                            <li>Includes before/after images, prediction masks, confidence maps</li>
+                            <li>Performance statistics and charts</li>
+                            <li>Comparison with ground truth when available</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>User Experience Improvements</h3>
+                <ul>
+                    <li>Loading indicators during model inference</li>
+                    <li>Real-time progress updates for batch processing</li>
+                    <li>Improved error messages with troubleshooting suggestions</li>
+                    <li>Keyboard shortcuts for common actions</li>
+                    <li>Responsive design optimized for different screen sizes</li>
+                    <li>Help tooltips explaining features and metrics</li>
+                </ul>
+
+                <h3>Testing Insights and Future Directions</h3>
+                <p>
+                    Comprehensive testing on Sri Lankan flood and landslide scenarios revealed several important insights:
+                </p>
+                <ul>
+                    <li><strong>Dataset Quality Impact:</strong> Model performs best on high-quality, cloud-free images from our preprocessing pipeline</li>
+                    <li><strong>Transfer Learning Success:</strong> EuroSAT pre-training provides strong foundation for Sri Lankan terrain</li>
+                    <li><strong>Regional Adaptation:</strong> Model successfully adapted to diverse Sri Lankan geographic conditions</li>
+                    <li><strong>Multi-Disaster Capability:</strong> Single model handles both floods and landslides effectively</li>
+                    <li><strong>Fine-Tuning Opportunities:</strong> Location-specific fine-tuning could improve performance in challenging terrain</li>
+                    <li><strong>Data Augmentation Value:</strong> More diverse training data needed for edge cases like partial cloud cover and mixed disasters</li>
+                </ul>
+            </div>
+
+            <!-- <div class="media-section">
+                <h2>Documentation & Media</h2>
+                 -->
+                <!-- <h3>Upgraded Web Interface</h3>
+                <div style="padding: 60px; background: #f0f0f0; text-align: center; margin: 10px 0; border: 2px dashed #ccc;">
+                    [Insert: Screenshot of upgraded interface with confidence maps]
+                </div>
+
+                <h3>Metrics Dashboard</h3>
+                <div style="padding: 50px; background: #f0f0f0; text-align: center; margin: 10px 0; border: 2px dashed #ccc;">
+                    [Insert: Dashboard showing IoU, F1-score, precision, recall]
+                </div>
+
+                <h3>Batch Processing View</h3>
+                <div style="padding: 50px; background: #f0f0f0; text-align: center; margin: 10px 0; border: 2px dashed #ccc;">
+                    [Insert: Grid view of batch processing results]
+                </div>
+
+                <h3>Flood Detection Results</h3>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 15px 0;">
+                    <div style="padding: 30px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        [Before Image]
+                    </div>
+                    <div style="padding: 30px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        [After Image]
+                    </div>
+                    <div style="padding: 30px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        [Prediction]
+                    </div>
+                    <div style="padding: 30px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        [Ground Truth]
+                    </div>
+                </div>
+
+                <h3>Landslide Detection Results</h3>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 15px 0;">
+                    <div style="padding: 30px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        [Before Image]
+                    </div>
+                    <div style="padding: 30px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        [After Image]
+                    </div>
+                    <div style="padding: 30px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        [Prediction]
+                    </div>
+                    <div style="padding: 30px; background: #f0f0f0; text-align: center; border: 2px dashed #ccc;">
+                        [Confidence Map]
+                    </div>
+                </div> -->
+
+                <!-- <h3>Performance Metrics Summary</h3>
+                <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 15px 0;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead style="background: #3498db; color: white;">
+                            <tr>
+                                <th style="padding: 10px; border: 1px solid #ddd;">Disaster Type</th>
+                                <th style="padding: 10px; border: 1px solid #ddd;">Avg IoU</th>
+                                <th style="padding: 10px; border: 1px solid #ddd;">Avg F1-Score</th>
+                                <th style="padding: 10px; border: 1px solid #ddd;">Samples Tested</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 10px; border: 1px solid #ddd;">Floods</td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">0.74</td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">0.80</td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">30+</td>
+                            </tr>
+                            <tr style="background: #f9f9f9;">
+                                <td style="padding: 10px; border: 1px solid #ddd;">Landslides</td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">0.70</td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">0.76</td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">15+</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; border: 1px solid #ddd;">Mixed (Flood + Landslide)</td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">0.72</td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">0.78</td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">10+</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> -->
+
+                <h3>Application Features Summary</h3>
+                <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 15px 0;">
+                    <ul style="list-style-type: none; padding-left: 0;">
+                        <li>✅ <strong>Model Integration:</strong> ViT-CNN loaded in GPU memory</li>
+                        <li>✅ <strong>Batch Processing:</strong> Multiple image pairs simultaneously</li>
+                        <li>✅ <strong>Confidence Maps:</strong> Pixel-wise prediction certainty</li>
+                        <li>✅ <strong>Metrics Dashboard:</strong> IoU, F1, precision, recall</li>
+                        <li>✅ <strong>Comparison Mode:</strong> Prediction vs. ground truth</li>
+                        <li>✅ <strong>Export Options:</strong> GeoTIFF, PNG, JSON, CSV</li>
+                        <li>✅ <strong>Fast Inference:</strong> 2-3 seconds per prediction</li>
+                        <li>✅ <strong>Multi-Hazard:</strong> Tested on floods, landslides, mixed disasters</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="next-steps">
+                <h2>Project Completion & Future Work</h2>
+                <ul>
+                    <li><strong>Documentation:</strong> Finalize comprehensive project documentation</li>
+                    <li><strong>Dataset Release:</strong> Prepare dataset for potential publication</li>
+                    <li><strong>Model Refinement:</strong> Fine-tune with expanded multi-hazard dataset</li>
+                    <li><strong>Deployment:</strong> Optimize for production deployment</li>
+                    <li><strong>User Testing:</strong> Gather feedback from disaster management professionals</li>
+                    <li><strong>Paper Preparation:</strong> Draft research paper on methodology and results</li>
+                    <li><strong>Future Extensions:</strong> Explore real-time monitoring and automated alerts</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="week-navigation">
+            <a href="week12.html" class="prev"><i class="fas fa-arrow-left"></i> Previous Week</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                <p><i class="fas fa-envelope"></i> e20293@eng.pdn.ac.lk</p>
+                <p><i class="fas fa-university"></i> University Of Peradeniya</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
